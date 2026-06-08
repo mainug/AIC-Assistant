@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EF Data Helper</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-main: #0b0b0b;
+        --bg-panel: #141414;
+        --bg-panel-soft: #1b1b1b;
+        --text-main: #f4f1e8;
+        --text-muted: #a7a29a;
+        --accent: #f5c542;
+        --accent-strong: #ffd84d;
+        --danger: #ff7b7b;
+        --border-soft: rgba(244, 241, 232, 0.12);
+        --border-yellow: rgba(245, 197, 66, 0.42);
+      }
+
+      body {
+        width: 330px;
+        margin: 0;
+        padding: 14px;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(245, 197, 66, 0.14),
+            transparent 220px
+          ),
+          var(--bg-main);
+        color: var(--text-main);
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+      }
+
+      h1::after {
+        content: "";
+        display: block;
+        width: 36px;
+        height: 3px;
+        margin-top: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .subtitle {
+        margin: 10px 0 14px;
+        color: var(--text-muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .status-card {
+        padding: 12px;
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+        background: var(--bg-panel);
+        margin-bottom: 12px;
+      }
+
+      .status-title {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .status-value {
+        margin-top: 4px;
+        font-size: 15px;
+        font-weight: 900;
+        color: var(--accent);
+      }
+
+      .data-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .mini-card {
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border-soft);
+        background: rgba(244, 241, 232, 0.055);
+      }
+
+      .mini-label {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .mini-value {
+        margin-top: 4px;
+        font-size: 15px;
+        font-weight: 900;
+        color: var(--text-main);
+        overflow-wrap: anywhere;
+      }
+
+      .section {
+        margin-top: 12px;
+      }
+
+      .section-title {
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 900;
+        color: var(--text-main);
+      }
+
+      .muted {
+        color: var(--text-muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      ul {
+        padding-left: 18px;
+        margin: 6px 0 0;
+      }
+
+      li {
+        margin: 3px 0;
+      }
+
+      .button-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 900;
+        background: var(--accent);
+        color: #111111;
+      }
+
+      button:hover {
+        background: var(--accent-strong);
+      }
+
+      button.secondary {
+        border-color: var(--border-soft);
+        background: rgba(244, 241, 232, 0.08);
+        color: var(--text-main);
+      }
+
+      button.secondary:hover {
+        border-color: var(--border-yellow);
+        background: rgba(245, 197, 66, 0.12);
+      }
+
+      button.danger {
+        border-color: rgba(255, 123, 123, 0.35);
+        background: rgba(255, 80, 80, 0.14);
+        color: #ffb8b8;
+      }
+
+      button.danger:hover {
+        background: rgba(255, 80, 80, 0.22);
+      }
+
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border-soft);
+        margin: 12px 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>EF Data Helper</h1>
+    <p class="subtitle">
+      Endfield 추천 팀 편성 페이지에서 감지한 데이터를 EF Data에 공유합니다.
+    </p>
+
+    <div class="status-card">
+      <div class="status-title">상태</div>
+      <div id="status" class="status-value">데이터 확인 중...</div>
+
+      <div id="dataBox" class="hidden">
+        <div class="data-grid">
+          <div class="mini-card">
+            <div class="mini-label">Role ID</div>
+            <div id="roleId" class="mini-value">-</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">감지 시간</div>
+            <div id="detectedAt" class="mini-value">-</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">캐릭터</div>
+            <div id="charactersCount" class="mini-value">-</div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">무기</div>
+            <div id="weaponsCount" class="mini-value">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">사용 방법</div>
+      <div class="muted">
+        1. 추천 팀 편성 페이지를 엽니다.<br />
+        2. 페이지에서 “내 데이터 동기화”를 ON으로 변경합니다.<br />
+        3. 데이터가 감지되면 “EF Data에 공유하기”를 누릅니다.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">전송되는 정보</div>
+      <ul class="muted">
+        <li>roleId</li>
+        <li>캐릭터/무기 보유 데이터</li>
+        <li>동기화 시간</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">전송하지 않는 정보</div>
+      <ul class="muted">
+        <li>쿠키, token, cred, sign</li>
+        <li>로그인 정보</li>
+        <li>요청 헤더 전체</li>
+      </ul>
+    </div>
+
+    <div class="button-list">
+      <button id="openRecTeamButton" class="secondary">
+        추천 팀 편성 페이지 열기
+      </button>
+      <button id="syncButton">EF Data에 공유하기</button>
+      <button id="openPageButton" class="secondary">내 데이터 보기</button>
+      <button id="openStatisticsButton" class="secondary">
+        통계 페이지 보기
+      </button>
+      <button id="openSignInButton" class="secondary">
+        출석체크 페이지 열기
+      </button>
+      <button id="clearButton" class="danger">감지 데이터 초기화</button>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

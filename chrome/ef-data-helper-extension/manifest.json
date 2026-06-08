@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "EF Data Helper Dev",
+  "version": "0.1.0",
+  "description": "Endfield data helper test extension",
+  "permissions": ["storage", "scripting"],
+  "host_permissions": [
+    "https://game.skport.com/*",
+    "https://zonai.skport.com/*",
+    "http://localhost:8080/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://game.skport.com/tools/endfield/rec-team*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://game.skport.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
