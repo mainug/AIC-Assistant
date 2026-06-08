@@ -313,7 +313,7 @@ function EndfieldStatisticsPage() {
         <header className="page-header">
           <h1 className="page-title">Endfield 통계</h1>
           <p className="page-description">
-            이 통계는 EF Data에 데이터를 공유한 유저 기준입니다. 전체 유저
+            이 통계는 AIC Assistant에 데이터를 공유한 유저 기준입니다. 전체 유저
             통계가 아닙니다.
           </p>
         </header>

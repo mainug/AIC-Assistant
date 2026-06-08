@@ -126,6 +126,90 @@ body {
 }
 
 /* =========================
+   Site Header / Footer
+========================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border-soft);
+  background: rgba(11, 11, 11, 0.86);
+  backdrop-filter: blur(14px);
+}
+
+.site-header-inner {
+  max-width: 1180px;
+  height: 62px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.site-logo {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.site-logo::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-nav a {
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.site-nav a:hover {
+  background: rgba(245, 197, 66, 0.12);
+  color: var(--accent);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-soft);
+  background: #0b0b0b;
+}
+
+.site-footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 32px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.site-footer-inner p {
+  margin: 0;
+}
+
+.site-footer-inner p + p {
+  margin-top: 6px;
+}
+
+/* =========================
    Home Page
 ========================= */
 
