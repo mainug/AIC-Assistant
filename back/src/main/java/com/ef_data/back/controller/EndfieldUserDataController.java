@@ -1,7 +1,6 @@
 package com.ef_data.back.controller;
 
 import com.ef_data.back.dto.EndfieldUserCharacterResponse;
-import com.ef_data.back.dto.EndfieldUserCharacterSkillResponse;
 import com.ef_data.back.dto.EndfieldUserProfileResponse;
 import com.ef_data.back.dto.EndfieldUserWeaponResponse;
 import com.ef_data.back.service.EndfieldUserDataQueryService;
@@ -36,13 +35,5 @@ public class EndfieldUserDataController {
             @PathVariable("roleId") String roleId
     ) {
         return queryService.getWeapons(roleId);
-    }
-
-    @GetMapping("/{roleId}/characters/{charId}/skills")
-    public List<EndfieldUserCharacterSkillResponse> getCharacterSkills(
-            @PathVariable("roleId") String roleId,
-            @PathVariable("charId") String charId
-    ) {
-        return queryService.getCharacterSkills(roleId, charId);
     }
 }

@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  CHARACTER_MAP,
-  getCharacterStandingImage,
+  CHARACTER_CLASS_LABEL,
+  CHARACTER_ELEMENT_LABEL,
   CHARACTER_PLACEHOLDER_IMAGE,
+  CHARACTER_RARITY_LABEL,
+  getCharacterMeta,
 } from "../data/operators";
 import {
-  WEAPON_MAP,
-  getWeaponImage,
   WEAPON_PLACEHOLDER_IMAGE,
+  WEAPON_RARITY_LABEL,
+  WEAPON_TYPE_LABEL,
+  getWeaponMeta,
 } from "../data/weapons";
 import "../styles/endfield.css";
 
@@ -33,6 +36,7 @@ type ViewMode = "characters" | "weapons";
 
 function EndfieldMyDataPage() {
   const { roleId } = useParams<{ roleId: string }>();
+  const navigate = useNavigate();
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -76,15 +80,32 @@ function EndfieldMyDataPage() {
     fetchData();
   }, [roleId]);
 
-  const ownedCharacters = useMemo(
-    () => characters.filter((character) => character.owned),
-    [characters],
-  );
+  const ownedCharacters = useMemo(() => {
+    return characters
+      .filter((character) => character.owned)
+      .sort((a, b) => {
+        if (b.level !== a.level) return b.level - a.level;
+        if (b.evolvePhase !== a.evolvePhase) {
+          return b.evolvePhase - a.evolvePhase;
+        }
 
-  const ownedWeapons = useMemo(
-    () => weapons.filter((weapon) => weapon.owned),
-    [weapons],
-  );
+        return getCharacterMeta(a.charId).name.localeCompare(
+          getCharacterMeta(b.charId).name,
+          "ko-KR",
+        );
+      });
+  }, [characters]);
+
+  const ownedWeapons = useMemo(() => {
+    return weapons
+      .filter((weapon) => weapon.owned)
+      .sort((a, b) => {
+        return getWeaponMeta(a.weaponId).name.localeCompare(
+          getWeaponMeta(b.weaponId).name,
+          "ko-KR",
+        );
+      });
+  }, [weapons]);
 
   const filteredCharacters = useMemo(() => {
     const trimmed = keyword.trim().toLowerCase();
@@ -92,8 +113,8 @@ function EndfieldMyDataPage() {
     if (!trimmed) return ownedCharacters;
 
     return ownedCharacters.filter((character) => {
-      const name = CHARACTER_MAP[character.charId] ?? character.charId;
-      return name.toLowerCase().includes(trimmed);
+      const meta = getCharacterMeta(character.charId);
+      return meta.name.toLowerCase().includes(trimmed);
     });
   }, [keyword, ownedCharacters]);
 
@@ -103,8 +124,8 @@ function EndfieldMyDataPage() {
     if (!trimmed) return ownedWeapons;
 
     return ownedWeapons.filter((weapon) => {
-      const name = WEAPON_MAP[weapon.weaponId] ?? weapon.weaponId;
-      return name.toLowerCase().includes(trimmed);
+      const meta = getWeaponMeta(weapon.weaponId);
+      return meta.name.toLowerCase().includes(trimmed);
     });
   }, [keyword, ownedWeapons]);
 
@@ -128,9 +149,9 @@ function EndfieldMyDataPage() {
     <div className="page">
       <main className="page-inner">
         <header className="page-header">
-          <h1 className="page-title">Endfield 내 데이터</h1>
+          <h1 className="page-title">내 Endfield 데이터</h1>
           <p className="page-description">
-            추천 팀 편성 페이지에서 감지한 유저 게임 데이터를 기준으로
+            추천 팀 편성 페이지에서 감지해 공유한 유저 게임 데이터를 기준으로
             표시합니다.
           </p>
         </header>
@@ -139,61 +160,96 @@ function EndfieldMyDataPage() {
           <StatCard title="Role ID" value={profile?.roleId ?? "-"} />
           <StatCard title="보유 캐릭터" value={`${ownedCharacters.length}명`} />
           <StatCard title="보유 무기" value={`${ownedWeapons.length}개`} />
+          <StatCard
+            title="마지막 동기화"
+            value={formatDateTime(profile?.lastSyncedAt)}
+          />
         </section>
 
         <section className="section">
-          <h2 className="section-title">동기화 정보</h2>
-          <div className="stat-card">
-            <div className="stat-label">마지막 동기화</div>
-            <div style={{ marginTop: 8 }}>
-              {formatDateTime(profile?.lastSyncedAt)}
+          <div className="section-heading-row">
+            <div>
+              <h2 className="section-title">보유 목록</h2>
+              <p className="section-subtitle">
+                {viewMode === "characters"
+                  ? `캐릭터 ${filteredCharacters.length}명 표시 중`
+                  : `무기 ${filteredWeapons.length}개 표시 중`}
+              </p>
             </div>
-          </div>
-        </section>
 
-        <section className="section">
-          <h2 className="section-title">보유 목록</h2>
+            <Link className="entity-tab" to="/endfield/statistics">
+              전체 통계 보기
+            </Link>
+          </div>
 
           <div className="toolbar">
-            <div className="entity-tabs" style={{ marginTop: 0 }}>
-              <button
-                className={`entity-tab ${viewMode === "characters" ? "active" : ""}`}
-                onClick={() => {
-                  setViewMode("characters");
-                  setKeyword("");
-                }}
-              >
-                캐릭터 {ownedCharacters.length}
-              </button>
+            <div className="toolbar-left">
+              <div className="entity-tabs">
+                <button
+                  className={`entity-tab ${
+                    viewMode === "characters" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setViewMode("characters");
+                    setKeyword("");
+                  }}
+                >
+                  캐릭터 {ownedCharacters.length}
+                </button>
 
-              <button
-                className={`entity-tab ${viewMode === "weapons" ? "active" : ""}`}
-                onClick={() => {
-                  setViewMode("weapons");
-                  setKeyword("");
-                }}
-              >
-                무기 {ownedWeapons.length}
-              </button>
+                <button
+                  className={`entity-tab ${
+                    viewMode === "weapons" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setViewMode("weapons");
+                    setKeyword("");
+                  }}
+                >
+                  무기 {ownedWeapons.length}
+                </button>
+              </div>
             </div>
 
-            <input
-              className="search-input"
-              value={keyword}
-              onChange={(event) => setKeyword(event.target.value)}
-              placeholder={
-                viewMode === "characters"
-                  ? "캐릭터 이름 검색"
-                  : "무기 이름 검색"
-              }
-            />
+            <div className="toolbar-right">
+              <input
+                className="search-input"
+                value={keyword}
+                onChange={(event) => setKeyword(event.target.value)}
+                placeholder={
+                  viewMode === "characters"
+                    ? "캐릭터 이름 검색"
+                    : "무기 이름 검색"
+                }
+              />
+            </div>
           </div>
 
           <div style={{ marginTop: 18 }}>
             {viewMode === "characters" ? (
-              <CharacterShowcaseGrid characters={filteredCharacters} />
+              <CharacterShowcaseGrid
+                characters={filteredCharacters}
+                onSelect={(charId) =>
+                  navigate(`/endfield/statistics/characters/${charId}`, {
+                    state: {
+                      from: `/my/endfield/${roleId}`,
+                      fromLabel: "내 데이터로 돌아가기",
+                    },
+                  })
+                }
+              />
             ) : (
-              <WeaponShowcaseGrid weapons={filteredWeapons} />
+              <WeaponShowcaseGrid
+                weapons={filteredWeapons}
+                onSelect={(weaponId) =>
+                  navigate(`/endfield/statistics/weapons/${weaponId}`, {
+                    state: {
+                      from: `/my/endfield/${roleId}`,
+                      fromLabel: "내 데이터로 돌아가기",
+                    },
+                  })
+                }
+              />
             )}
           </div>
         </section>
@@ -202,7 +258,13 @@ function EndfieldMyDataPage() {
   );
 }
 
-function CharacterShowcaseGrid({ characters }: { characters: Character[] }) {
+function CharacterShowcaseGrid({
+  characters,
+  onSelect,
+}: {
+  characters: Character[];
+  onSelect: (charId: string) => void;
+}) {
   if (characters.length === 0) {
     return <div className="empty-text">보유 캐릭터 데이터가 없습니다.</div>;
   }
@@ -210,17 +272,22 @@ function CharacterShowcaseGrid({ characters }: { characters: Character[] }) {
   return (
     <div className="collection-grid">
       {characters.map((character) => {
-        const name = CHARACTER_MAP[character.charId] ?? character.charId;
+        const meta = getCharacterMeta(character.charId);
 
         return (
-          <article className="collection-card" key={character.charId}>
+          <article
+            className="collection-card"
+            key={character.charId}
+            onClick={() => onSelect(character.charId)}
+          >
             <div className="collection-image-area">
               <img
                 referrerPolicy="no-referrer"
                 className="collection-image character-art"
-                src={getCharacterStandingImage(character.charId)}
-                alt={name}
+                src={meta.standingImage || CHARACTER_PLACEHOLDER_IMAGE}
+                alt={meta.name}
                 onError={(event) => {
+                  event.currentTarget.onerror = null;
                   event.currentTarget.src = CHARACTER_PLACEHOLDER_IMAGE;
                 }}
               />
@@ -233,8 +300,12 @@ function CharacterShowcaseGrid({ characters }: { characters: Character[] }) {
             <div className="collection-bottom-gradient" />
 
             <div className="collection-info">
-              <div className="collection-name">{name}</div>
-              <div className="collection-detail">상세보기 &gt;</div>
+              <div className="collection-name">{meta.name}</div>
+              <div className="collection-detail">
+                {CHARACTER_RARITY_LABEL[meta.rarity]} ·{" "}
+                {CHARACTER_ELEMENT_LABEL[meta.element]} ·{" "}
+                {CHARACTER_CLASS_LABEL[meta.classType]}
+              </div>
             </div>
 
             <div className="collection-ring">Lv.{character.level}</div>
@@ -245,7 +316,13 @@ function CharacterShowcaseGrid({ characters }: { characters: Character[] }) {
   );
 }
 
-function WeaponShowcaseGrid({ weapons }: { weapons: Weapon[] }) {
+function WeaponShowcaseGrid({
+  weapons,
+  onSelect,
+}: {
+  weapons: Weapon[];
+  onSelect: (weaponId: string) => void;
+}) {
   if (weapons.length === 0) {
     return <div className="empty-text">보유 무기 데이터가 없습니다.</div>;
   }
@@ -253,29 +330,39 @@ function WeaponShowcaseGrid({ weapons }: { weapons: Weapon[] }) {
   return (
     <div className="collection-grid">
       {weapons.map((weapon) => {
-        const name = WEAPON_MAP[weapon.weaponId] ?? weapon.weaponId;
+        const meta = getWeaponMeta(weapon.weaponId);
 
         return (
-          <article className="collection-card" key={weapon.weaponId}>
+          <article
+            className="collection-card"
+            key={weapon.weaponId}
+            onClick={() => onSelect(weapon.weaponId)}
+          >
             <div className="collection-image-area">
               <img
                 referrerPolicy="no-referrer"
                 className="collection-image contain"
-                src={getWeaponImage(weapon.weaponId)}
-                alt={name}
+                src={meta.iconUrl || WEAPON_PLACEHOLDER_IMAGE}
+                alt={meta.name}
                 onError={(event) => {
+                  event.currentTarget.onerror = null;
                   event.currentTarget.src = WEAPON_PLACEHOLDER_IMAGE;
                 }}
               />
 
-              <div className="collection-top-badge">무기</div>
+              <div className="collection-top-badge">
+                {WEAPON_RARITY_LABEL[meta.rarity]}
+              </div>
             </div>
 
             <div className="collection-bottom-gradient" />
 
             <div className="collection-info">
-              <div className="collection-name">{name}</div>
-              <div className="collection-detail">상세보기 &gt;</div>
+              <div className="collection-name">{meta.name}</div>
+              <div className="collection-detail">
+                {WEAPON_RARITY_LABEL[meta.rarity]} ·{" "}
+                {WEAPON_TYPE_LABEL[meta.weaponType]}
+              </div>
             </div>
           </article>
         );
@@ -302,7 +389,15 @@ function formatDateTime(value?: string) {
   if (!value) return "-";
 
   try {
-    return new Date(value).toLocaleString("ko-KR");
+    const date = new Date(value);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hour = String(date.getHours()).padStart(2, "0");
+    const minute = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}.${month}.${day} ${hour}:${minute}`;
   } catch {
     return value;
   }

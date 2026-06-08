@@ -56,6 +56,8 @@ type CharacterWeaponTypeFilter = "all" | CharacterWeaponType;
 type WeaponRarityFilter = "all" | WeaponRarity;
 type WeaponTypeFilter = "all" | WeaponType;
 
+type SortMode = "ownershipDesc" | "ownershipAsc" | "nameAsc" | "rarityDesc";
+
 function EndfieldStatisticsPage() {
   const navigate = useNavigate();
 
@@ -66,6 +68,7 @@ function EndfieldStatisticsPage() {
   const [viewMode, setViewMode] = useState<StatisticsViewMode>("characters");
   const [keyword, setKeyword] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [sortMode, setSortMode] = useState<SortMode>("ownershipDesc");
 
   const [ownershipFilter, setOwnershipFilter] =
     useState<OwnershipFilter>("all");
@@ -201,18 +204,42 @@ function EndfieldStatisticsPage() {
         return true;
       })
       .sort((a, b) => {
-        if (b.ownedCount !== a.ownedCount) {
-          return b.ownedCount - a.ownedCount;
-        }
+        const aMeta = getCharacterMeta(a.charId);
+        const bMeta = getCharacterMeta(b.charId);
 
-        if (b.ownershipRate !== a.ownershipRate) {
-          return b.ownershipRate - a.ownershipRate;
-        }
+        switch (sortMode) {
+          case "ownershipAsc":
+            if (a.ownershipRate !== b.ownershipRate) {
+              return a.ownershipRate - b.ownershipRate;
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
 
-        return getCharacterMeta(a.charId).name.localeCompare(
-          getCharacterMeta(b.charId).name,
-          "ko-KR",
-        );
+          case "nameAsc":
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "rarityDesc":
+            if (getRarityRank(bMeta.rarity) !== getRarityRank(aMeta.rarity)) {
+              return getRarityRank(bMeta.rarity) - getRarityRank(aMeta.rarity);
+            }
+
+            if (b.ownershipRate !== a.ownershipRate) {
+              return b.ownershipRate - a.ownershipRate;
+            }
+
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "ownershipDesc":
+          default:
+            if (b.ownershipRate !== a.ownershipRate) {
+              return b.ownershipRate - a.ownershipRate;
+            }
+
+            if (b.ownedCount !== a.ownedCount) {
+              return b.ownedCount - a.ownedCount;
+            }
+
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+        }
       });
   }, [
     allCharacters,
@@ -222,6 +249,7 @@ function EndfieldStatisticsPage() {
     elementFilter,
     classFilter,
     characterWeaponTypeFilter,
+    sortMode,
   ]);
 
   const filteredWeapons = useMemo(() => {
@@ -257,18 +285,42 @@ function EndfieldStatisticsPage() {
         return true;
       })
       .sort((a, b) => {
-        if (b.ownedCount !== a.ownedCount) {
-          return b.ownedCount - a.ownedCount;
-        }
+        const aMeta = getWeaponMeta(a.weaponId);
+        const bMeta = getWeaponMeta(b.weaponId);
 
-        if (b.ownershipRate !== a.ownershipRate) {
-          return b.ownershipRate - a.ownershipRate;
-        }
+        switch (sortMode) {
+          case "ownershipAsc":
+            if (a.ownershipRate !== b.ownershipRate) {
+              return a.ownershipRate - b.ownershipRate;
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
 
-        return getWeaponMeta(a.weaponId).name.localeCompare(
-          getWeaponMeta(b.weaponId).name,
-          "ko-KR",
-        );
+          case "nameAsc":
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "rarityDesc":
+            if (getRarityRank(bMeta.rarity) !== getRarityRank(aMeta.rarity)) {
+              return getRarityRank(bMeta.rarity) - getRarityRank(aMeta.rarity);
+            }
+
+            if (b.ownershipRate !== a.ownershipRate) {
+              return b.ownershipRate - a.ownershipRate;
+            }
+
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "ownershipDesc":
+          default:
+            if (b.ownershipRate !== a.ownershipRate) {
+              return b.ownershipRate - a.ownershipRate;
+            }
+
+            if (b.ownedCount !== a.ownedCount) {
+              return b.ownedCount - a.ownedCount;
+            }
+
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+        }
       });
   }, [
     allWeapons,
@@ -276,11 +328,13 @@ function EndfieldStatisticsPage() {
     ownershipFilter,
     weaponRarityFilter,
     weaponTypeFilter,
+    sortMode,
   ]);
 
   const resetFilters = () => {
     setKeyword("");
     setOwnershipFilter("all");
+    setSortMode("ownershipDesc");
 
     setCharacterRarityFilter("all");
     setElementFilter("all");
@@ -405,6 +459,19 @@ function EndfieldStatisticsPage() {
                 }
               />
 
+              <select
+                className="sort-select"
+                value={sortMode}
+                onChange={(event) =>
+                  setSortMode(event.target.value as SortMode)
+                }
+              >
+                <option value="ownershipDesc">보유율 높은 순</option>
+                <option value="ownershipAsc">보유율 낮은 순</option>
+                <option value="nameAsc">이름순</option>
+                <option value="rarityDesc">성급 높은 순</option>
+              </select>
+
               <div className="filter-dropdown-wrap">
                 <button
                   className={`filter-toggle-button ${filterOpen ? "active" : ""}`}
@@ -463,14 +530,24 @@ function EndfieldStatisticsPage() {
               <CharacterStatisticsGrid
                 characters={filteredCharacters}
                 onSelect={(charId) =>
-                  navigate(`/endfield/statistics/characters/${charId}`)
+                  navigate(`/endfield/statistics/characters/${charId}`, {
+                    state: {
+                      from: "/endfield/statistics",
+                      fromLabel: "통계로 돌아가기",
+                    },
+                  })
                 }
               />
             ) : (
               <WeaponStatisticsGrid
                 weapons={filteredWeapons}
                 onSelect={(weaponId) =>
-                  navigate(`/endfield/statistics/weapons/${weaponId}`)
+                  navigate(`/endfield/statistics/weapons/${weaponId}`, {
+                    state: {
+                      from: "/endfield/statistics",
+                      fromLabel: "통계로 돌아가기",
+                    },
+                  })
                 }
               />
             )}
@@ -807,6 +884,13 @@ function StatCard({ title, value }: StatCardProps) {
       <div className="stat-value">{value}</div>
     </div>
   );
+}
+
+function getRarityRank(rarity: number | string) {
+  if (rarity === 6) return 6;
+  if (rarity === 5) return 5;
+  if (rarity === 4) return 4;
+  return 0;
 }
 
 export default EndfieldStatisticsPage;

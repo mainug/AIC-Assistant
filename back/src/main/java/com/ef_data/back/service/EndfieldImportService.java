@@ -2,11 +2,9 @@ package com.ef_data.back.service;
 
 import com.ef_data.back.dto.EndfieldUserGameDataImportRequest;
 import com.ef_data.back.entity.EndfieldUserCharacter;
-import com.ef_data.back.entity.EndfieldUserCharacterSkill;
 import com.ef_data.back.entity.EndfieldUserProfile;
 import com.ef_data.back.entity.EndfieldUserWeapon;
 import com.ef_data.back.repository.EndfieldUserCharacterRepository;
-import com.ef_data.back.repository.EndfieldUserCharacterSkillRepository;
 import com.ef_data.back.repository.EndfieldUserProfileRepository;
 import com.ef_data.back.repository.EndfieldUserWeaponRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,7 +22,6 @@ public class EndfieldImportService {
 
     private final EndfieldUserProfileRepository profileRepository;
     private final EndfieldUserCharacterRepository characterRepository;
-    private final EndfieldUserCharacterSkillRepository skillRepository;
     private final EndfieldUserWeaponRepository weaponRepository;
 
     @Transactional
@@ -74,33 +71,7 @@ public class EndfieldImportService {
             character.setOwned(getBoolean(charNode, "owned", false));
 
             characterRepository.save(character);
-
-            saveOrUpdateSkills(roleId, charId, charNode.path("userSkills"));
         }
-    }
-
-    private void saveOrUpdateSkills(String roleId, String charId, JsonNode userSkills) {
-        if (userSkills == null || userSkills.isMissingNode() || !userSkills.isObject()) {
-            return;
-        }
-
-        userSkills.fields().forEachRemaining(entry -> {
-            String skillKey = entry.getKey();
-            JsonNode skillNode = entry.getValue();
-
-            String skillId = getText(skillNode, "skillId", skillKey);
-
-            EndfieldUserCharacterSkill skill = skillRepository
-                    .findByRoleIdAndCharIdAndSkillId(roleId, charId, skillId)
-                    .orElseGet(EndfieldUserCharacterSkill::new);
-
-            skill.setRoleId(roleId);
-            skill.setCharId(charId);
-            skill.setSkillId(skillId);
-            skill.setLevel(getInt(skillNode, "level", 0));
-
-            skillRepository.save(skill);
-        });
     }
 
     private void saveOrUpdateWeapons(String roleId, Map<String, JsonNode> userWeapons) {

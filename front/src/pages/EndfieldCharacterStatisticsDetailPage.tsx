@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   CHARACTER_CLASS_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -111,18 +111,30 @@ function EndfieldCharacterStatisticsDetailPage() {
   const maxEvolve = Math.max(...evolvePhaseStats.map((item) => item.count), 0);
   const maxLevel = Math.max(...levelStats.map((item) => item.count), 0);
 
+  const location = useLocation();
+
+  const backState = location.state as
+    | {
+        from?: string;
+        fromLabel?: string;
+      }
+    | undefined;
+
+  const backTo = backState?.from ?? "/endfield/statistics";
+  const backLabel = backState?.fromLabel ?? "통계로 돌아가기";
+
   return (
     <div className="page">
       <main className="page-inner">
         <header className="page-header">
-          <Link className="back-link" to="/endfield/statistics">
-            ← 통계로 돌아가기
+          <Link className="back-link" to={backTo}>
+            ← {backLabel}
           </Link>
 
           <h1 className="page-title">{meta.name} 상세 통계</h1>
           <p className="page-description">
-            EF Data에 공유된 유저 데이터를 기준으로 해당 캐릭터의 보유율, 정예화
-            단계, 주요 레벨 구간을 표시합니다.
+            AIC Assistant에 공유된 유저 데이터를 기준으로 해당 캐릭터의 보유율,
+            정예화 단계, 주요 레벨 구간을 표시합니다.
           </p>
         </header>
 

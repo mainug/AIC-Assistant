@@ -476,6 +476,7 @@ body {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  text-decoration: none;
 }
 
 .entity-tab {
@@ -524,6 +525,29 @@ body {
 .search-input:focus {
   border-color: var(--accent);
   background: rgba(244, 241, 232, 0.1);
+}
+
+.sort-select {
+  height: 42px;
+  min-width: 150px;
+  padding: 0 34px 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  outline: none;
+  background: rgba(244, 241, 232, 0.07);
+  color: var(--text-main);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sort-select:focus {
+  border-color: var(--accent);
+  background: rgba(244, 241, 232, 0.1);
+}
+
+.sort-select option {
+  background: #111111;
+  color: #f4f1e8;
 }
 
 /* =========================
@@ -1174,6 +1198,10 @@ body {
 
   .search-input {
     max-width: none;
+    width: 100%;
+  }
+
+  .sort-select {
     width: 100%;
   }
 

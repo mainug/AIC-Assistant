@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   WEAPON_PLACEHOLDER_IMAGE,
   WEAPON_RARITY_LABEL,
@@ -24,6 +24,18 @@ function EndfieldWeaponStatisticsDetailPage() {
   const [error, setError] = useState("");
 
   const meta = weaponId ? getWeaponMeta(weaponId) : null;
+
+  const location = useLocation();
+
+  const backState = location.state as
+    | {
+        from?: string;
+        fromLabel?: string;
+      }
+    | undefined;
+
+  const backTo = backState?.from ?? "/endfield/statistics";
+  const backLabel = backState?.fromLabel ?? "통계로 돌아가기";
 
   const ownership = useMemo(() => {
     if (!weaponId) return null;
@@ -84,8 +96,8 @@ function EndfieldWeaponStatisticsDetailPage() {
     <div className="page">
       <main className="page-inner">
         <header className="page-header">
-          <Link className="back-link" to="/endfield/statistics">
-            ← 통계로 돌아가기
+          <Link className="back-link" to={backTo}>
+            ← {backLabel}
           </Link>
 
           <h1 className="page-title">{meta.name} 상세 정보</h1>
