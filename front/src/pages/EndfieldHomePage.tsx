@@ -41,7 +41,7 @@ function EndfieldHomePage() {
           <div className="home-hero-content">
             <div className="home-eyebrow">ARKNIGHTS: ENDFIELD DATA HUB</div>
 
-            <h1 className="home-title">EF Data</h1>
+            <h1 className="home-title">AIC Assistant</h1>
 
             <p className="home-description">
               명일방주: 엔드필드 유저 데이터를 기반으로 캐릭터와 무기 보유율,

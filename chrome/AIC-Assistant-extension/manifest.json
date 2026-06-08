@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "EF Data Helper Dev",
+  "name": "AIC Assistant",
+  "short_name": "AIC",
   "version": "0.1.0",
-  "description": "Endfield data helper test extension",
+  "description": "AIC Assistant extension",
   "permissions": ["storage", "scripting"],
   "host_permissions": [
     "https://game.skport.com/*",

@@ -11,7 +11,7 @@
         const cloned = response.clone();
 
         cloned.json().then((data) => {
-          console.log("[EF Data Helper] user-game-data detected");
+          console.log("[AIC-Assistant] user-game-data detected");
           console.log(data);
 
           const userGameData = data?.data?.userGameData;
@@ -30,13 +30,13 @@
             detectedAt: new Date().toISOString(),
           };
 
-          console.log("[EF Data Helper] roleId:", payload.roleId);
-          console.log("[EF Data Helper] characters:", payload.charactersCount);
-          console.log("[EF Data Helper] weapons:", payload.weaponsCount);
+          console.log("[AIC-Assistant] roleId:", payload.roleId);
+          console.log("[AIC-Assistant] characters:", payload.charactersCount);
+          console.log("[AIC-Assistant] weapons:", payload.weaponsCount);
 
           window.postMessage(
             {
-              source: "EF_DATA_HELPER",
+              source: "AIC-Assistant",
               type: "USER_GAME_DATA_DETECTED",
               payload,
             },
@@ -45,11 +45,11 @@
         });
       }
     } catch (err) {
-      console.warn("[EF Data Helper] fetch hook error", err);
+      console.warn("[AIC-Assistant] fetch hook error", err);
     }
 
     return response;
   };
 
-  console.log("[EF Data Helper] fetch hook installed");
+  console.log("[AIC-Assistant] fetch hook installed");
 })();

@@ -1,5 +1,5 @@
-const EF_DATA_BASE_URL = "http://localhost:5173";
-const EF_DATA_API_BASE_URL = "http://localhost:8080";
+const AIC_ASSISTANT_BASE_URL = "http://localhost:5173";
+const AIC_ASSISTANT_API_BASE_URL = "http://localhost:8080";
 
 const REC_TEAM_URL =
   "https://game.skport.com/tools/endfield/rec-team?header=0&ctr_orientation=landscape&routeId=0";
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       syncButton.textContent = "공유 중...";
 
       const response = await fetch(
-        `${EF_DATA_API_BASE_URL}/api/endfield/import/user-game-data`,
+        `${AIC_ASSISTANT_API_BASE_URL}/api/endfield/import/user-game-data`,
         {
           method: "POST",
           headers: {
@@ -103,13 +103,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     chrome.tabs.create({
-      url: `${EF_DATA_BASE_URL}/my/endfield/${data.roleId}`,
+      url: `${AIC_ASSISTANT_BASE_URL}/my/endfield/${data.roleId}`,
     });
   });
 
   openStatisticsButton.addEventListener("click", () => {
     chrome.tabs.create({
-      url: `${EF_DATA_BASE_URL}/endfield/statistics`,
+      url: `${AIC_ASSISTANT_BASE_URL}/endfield/statistics`,
     });
   });
 
