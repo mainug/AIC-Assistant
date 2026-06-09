@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 import {
   CHARACTER_CLASS_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -63,11 +64,9 @@ function EndfieldMyDataPage() {
         setError("");
 
         const [profileRes, charactersRes, weaponsRes] = await Promise.all([
-          fetch(`http://localhost:8080/api/endfield/users/${roleId}/profile`),
-          fetch(
-            `http://localhost:8080/api/endfield/users/${roleId}/characters`,
-          ),
-          fetch(`http://localhost:8080/api/endfield/users/${roleId}/weapons`),
+          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/profile`),
+          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/characters`),
+          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/weapons`),
         ]);
 
         if (!profileRes.ok) throw new Error("프로필 조회 실패");

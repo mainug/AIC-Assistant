@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 import {
   CHARACTER_CLASS_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -104,13 +105,9 @@ function EndfieldStatisticsPage() {
         setError("");
 
         const [summaryRes, charactersRes, weaponsRes] = await Promise.all([
-          fetch("http://localhost:8080/api/endfield/statistics/summary"),
-          fetch(
-            "http://localhost:8080/api/endfield/statistics/characters/ownership",
-          ),
-          fetch(
-            "http://localhost:8080/api/endfield/statistics/weapons/ownership",
-          ),
+          fetch(`${API_BASE_URL}/api/endfield/statistics/summary`),
+          fetch(`${API_BASE_URL}/api/endfield/statistics/characters/ownership`),
+          fetch(`${API_BASE_URL}/api/endfield/statistics/weapons/ownership`),
         ]);
 
         if (!summaryRes.ok) throw new Error("요약 통계 조회 실패");

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 import "../styles/endfield.css";
 
 type Summary = {
@@ -16,7 +17,7 @@ function EndfieldHomePage() {
     const fetchSummary = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/endfield/statistics/summary",
+          `${API_BASE_URL}/api/endfield/statistics/summary`,
         );
 
         if (!response.ok) {

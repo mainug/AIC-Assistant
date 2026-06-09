@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 import {
   CHARACTER_CLASS_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -63,14 +64,12 @@ function EndfieldCharacterStatisticsDetailPage() {
         setError("");
 
         const [ownershipRes, evolveRes, levelRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/api/endfield/statistics/characters/ownership`),
           fetch(
-            "http://localhost:8080/api/endfield/statistics/characters/ownership",
+            `${API_BASE_URL}/api/endfield/statistics/characters/${charId}/evolve-phase`,
           ),
           fetch(
-            `http://localhost:8080/api/endfield/statistics/characters/${charId}/evolve-phase`,
-          ),
-          fetch(
-            `http://localhost:8080/api/endfield/statistics/characters/${charId}/level-distribution`,
+            `${API_BASE_URL}/api/endfield/statistics/characters/${charId}/level-distribution`,
           ),
         ]);
 

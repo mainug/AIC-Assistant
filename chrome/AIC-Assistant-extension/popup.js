@@ -1,11 +1,7 @@
-const AIC_ASSISTANT_BASE_URL = "http://localhost:5173";
-const AIC_ASSISTANT_API_BASE_URL = "http://localhost:8080";
-
-const REC_TEAM_URL =
-  "https://game.skport.com/tools/endfield/rec-team?header=0&ctr_orientation=landscape&routeId=0";
-
-const SIGN_IN_URL =
-  "https://game.skport.com/endfield/sign-in?header=0&hg_media=skport&hg_link_campaign=tools";
+const FRONT_BASE_URL = AIC_CONFIG.FRONT_BASE_URL;
+const API_BASE_URL = AIC_CONFIG.API_BASE_URL;
+const REC_TEAM_URL = AIC_CONFIG.REC_TEAM_URL;
+const SIGN_IN_URL = AIC_CONFIG.SIGN_IN_URL;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const result = await chrome.storage.local.get("latestUserGameData");
@@ -15,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const dataBox = document.getElementById("dataBox");
   const syncButton = document.getElementById("syncButton");
   const openPageButton = document.getElementById("openPageButton");
-  const openStatsButton = document.getElementById("openStatsButton");
+  const openStatisticsButton = document.getElementById("openStatisticsButton");
   const openRecTeamButton = document.getElementById("openRecTeamButton");
   const openSignInButton = document.getElementById("openSignInButton");
   const clearButton = document.getElementById("clearButton");
@@ -50,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       syncButton.textContent = "공유 중...";
 
       const response = await fetch(
-        `${AIC_ASSISTANT_API_BASE_URL}/api/endfield/import/user-game-data`,
+        `${API_BASE_URL}/api/endfield/import/user-game-data`,
         {
           method: "POST",
           headers: {
@@ -68,29 +64,29 @@ document.addEventListener("DOMContentLoaded", async () => {
       const responseText = await response.text();
 
       if (!response.ok) {
-        console.error("[EF Data Helper] server error", {
+        console.error("[AIC Assistant] server error", {
           status: response.status,
           body: responseText,
         });
 
         syncButton.disabled = false;
-        syncButton.textContent = "EF Data에 공유하기";
+        syncButton.textContent = "AIC Assistant에 공유하기";
 
         alert(`공유 실패: 서버 응답 ${response.status}`);
         return;
       }
 
-      console.log("[EF Data Helper] sync success", responseText);
+      console.log("[AIC Assistant] sync success", responseText);
 
       syncButton.textContent = "공유 완료";
       syncButton.disabled = true;
 
-      alert("EF Data에 공유 완료");
+      alert("AIC Assistant에 공유 완료");
     } catch (error) {
-      console.error("[EF Data Helper] sync failed", error);
+      console.error("[AIC Assistant] sync failed", error);
 
       syncButton.disabled = false;
-      syncButton.textContent = "EF Data에 공유하기";
+      syncButton.textContent = "AIC Assistant에 공유하기";
 
       alert(`공유 실패: ${error.message}`);
     }
@@ -103,13 +99,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     chrome.tabs.create({
-      url: `${AIC_ASSISTANT_BASE_URL}/my/endfield/${data.roleId}`,
+      url: `${FRONT_BASE_URL}/my/endfield/${data.roleId}`,
     });
   });
 
   openStatisticsButton.addEventListener("click", () => {
     chrome.tabs.create({
-      url: `${AIC_ASSISTANT_BASE_URL}/endfield/statistics`,
+      url: `${FRONT_BASE_URL}/endfield/statistics`,
     });
   });
 

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 import {
   WEAPON_PLACEHOLDER_IMAGE,
   WEAPON_RARITY_LABEL,
@@ -59,7 +60,7 @@ function EndfieldWeaponStatisticsDetailPage() {
         setError("");
 
         const response = await fetch(
-          "http://localhost:8080/api/endfield/statistics/weapons/ownership",
+          `${API_BASE_URL}/api/endfield/statistics/weapons/ownership`,
         );
 
         if (!response.ok) throw new Error("무기 보유율 통계 조회 실패");
