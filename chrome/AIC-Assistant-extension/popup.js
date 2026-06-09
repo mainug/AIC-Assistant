@@ -104,8 +104,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   openStatisticsButton.addEventListener("click", () => {
+    const statisticsUrl = data?.roleId
+      ? `${FRONT_BASE_URL}/endfield/statistics?roleId=${encodeURIComponent(
+          data.roleId,
+        )}`
+      : `${FRONT_BASE_URL}/endfield/statistics`;
+
     chrome.tabs.create({
-      url: `${FRONT_BASE_URL}/endfield/statistics`,
+      url: statisticsUrl,
     });
   });
 

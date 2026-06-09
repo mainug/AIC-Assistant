@@ -1,16 +1,16 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { API_BASE_URL } from "../api/config";
 import {
-  CHARACTER_CLASS_LABEL,
+  CHARACTER_PROFESSION_LABEL,
   CHARACTER_ELEMENT_LABEL,
   CHARACTER_META_MAP,
   CHARACTER_PLACEHOLDER_IMAGE,
   CHARACTER_RARITY_LABEL,
   CHARACTER_WEAPON_TYPE_LABEL,
   getCharacterMeta,
-  type CharacterClass,
+  type CharacterProfession,
   type CharacterElement,
   type CharacterRarity,
   type CharacterWeaponType,
@@ -47,17 +47,29 @@ type WeaponOwnership = {
 };
 
 type StatisticsViewMode = "characters" | "weapons";
-type OwnershipFilter = "ownedOnly" | "all";
+type OwnershipFilter = "all" | "ownedOnly";
 
 type CharacterRarityFilter = "all" | CharacterRarity;
 type CharacterElementFilter = "all" | CharacterElement;
-type CharacterClassFilter = "all" | CharacterClass;
+type CharacterClassFilter = "all" | CharacterProfession;
 type CharacterWeaponTypeFilter = "all" | CharacterWeaponType;
 
 type WeaponRarityFilter = "all" | WeaponRarity;
 type WeaponTypeFilter = "all" | WeaponType;
 
 type SortMode = "ownershipDesc" | "ownershipAsc" | "nameAsc" | "rarityDesc";
+
+type MyCharacter = {
+  charId: string;
+  level: number;
+  evolvePhase: number;
+  owned: boolean;
+};
+
+type MyWeapon = {
+  weaponId: string;
+  owned: boolean;
+};
 
 type EmptyStateProps = {
   eyebrow?: string;
@@ -66,6 +78,14 @@ type EmptyStateProps = {
   actionLabel?: string;
   actionHref?: string;
 };
+
+function getElementIconPath(element: string) {
+  return `/icons/endfield/elements/${element}.png`;
+}
+
+function getProfessionIconPath(profession: string) {
+  return `/icons/endfield/professions/${profession}.png`;
+}
 
 function EndfieldStatisticsPage() {
   const navigate = useNavigate();
@@ -95,6 +115,25 @@ function EndfieldStatisticsPage() {
   const [weaponTypeFilter, setWeaponTypeFilter] =
     useState<WeaponTypeFilter>("all");
 
+  const [searchParams] = useSearchParams();
+  const roleIdFromUrl = searchParams.get("roleId");
+
+  const [storedRoleId, setStoredRoleId] = useState(() => {
+    return localStorage.getItem("aic:lastRoleId");
+  });
+
+  const currentRoleId = roleIdFromUrl ?? storedRoleId;
+
+  useEffect(() => {
+    if (!roleIdFromUrl) return;
+
+    localStorage.setItem("aic:lastRoleId", roleIdFromUrl);
+    setStoredRoleId(roleIdFromUrl);
+  }, [roleIdFromUrl]);
+
+  const [myCharacters, setMyCharacters] = useState<MyCharacter[]>([]);
+  const [myWeapons, setMyWeapons] = useState<MyWeapon[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -104,19 +143,41 @@ function EndfieldStatisticsPage() {
         setLoading(true);
         setError("");
 
-        const [summaryRes, charactersRes, weaponsRes] = await Promise.all([
+        const [
+          summaryRes,
+          charactersRes,
+          weaponsRes,
+          myCharactersRes,
+          myWeaponsRes,
+        ] = await Promise.all([
           fetch(`${API_BASE_URL}/api/endfield/statistics/summary`),
           fetch(`${API_BASE_URL}/api/endfield/statistics/characters/ownership`),
           fetch(`${API_BASE_URL}/api/endfield/statistics/weapons/ownership`),
+          currentRoleId
+            ? fetch(
+                `${API_BASE_URL}/api/endfield/users/${currentRoleId}/characters`,
+              )
+            : Promise.resolve(null),
+          currentRoleId
+            ? fetch(
+                `${API_BASE_URL}/api/endfield/users/${currentRoleId}/weapons`,
+              )
+            : Promise.resolve(null),
         ]);
 
         if (!summaryRes.ok) throw new Error("요약 통계 조회 실패");
         if (!charactersRes.ok) throw new Error("캐릭터 보유율 조회 실패");
         if (!weaponsRes.ok) throw new Error("무기 보유율 조회 실패");
+        if (myCharactersRes && !myCharactersRes.ok)
+          throw new Error("내 캐릭터 조회 실패");
+        if (myWeaponsRes && !myWeaponsRes.ok)
+          throw new Error("내 무기 조회 실패");
 
         setSummary(await summaryRes.json());
         setCharacters(await charactersRes.json());
         setWeapons(await weaponsRes.json());
+        setMyCharacters(myCharactersRes ? await myCharactersRes.json() : []);
+        setMyWeapons(myWeaponsRes ? await myWeaponsRes.json() : []);
       } catch (err) {
         console.error(err);
         setError("통계 데이터를 불러오지 못했습니다.");
@@ -126,7 +187,7 @@ function EndfieldStatisticsPage() {
     };
 
     fetchStatistics();
-  }, []);
+  }, [currentRoleId]);
 
   const characterOwnershipMap = useMemo(() => {
     return new Map(
@@ -168,12 +229,30 @@ function EndfieldStatisticsPage() {
     });
   }, [weaponOwnershipMap, summary?.totalUsers]);
 
+  const myOwnedCharacterIdSet = useMemo(() => {
+    return new Set(
+      myCharacters
+        .filter((character) => character.owned)
+        .map((character) => character.charId),
+    );
+  }, [myCharacters]);
+
+  const myOwnedWeaponIdSet = useMemo(() => {
+    return new Set(
+      myWeapons
+        .filter((weapon) => weapon.owned)
+        .map((weapon) => weapon.weaponId),
+    );
+  }, [myWeapons]);
+
   const filteredCharacters = useMemo(() => {
     const trimmed = keyword.trim().toLowerCase();
 
     const source =
       ownershipFilter === "ownedOnly"
-        ? allCharacters.filter((character) => character.ownedCount > 0)
+        ? allCharacters.filter((character) =>
+            myOwnedCharacterIdSet.has(character.charId),
+          )
         : allCharacters;
 
     return source
@@ -195,7 +274,7 @@ function EndfieldStatisticsPage() {
           return false;
         }
 
-        if (classFilter !== "all" && meta.classType !== classFilter) {
+        if (classFilter !== "all" && meta.profession !== classFilter) {
           return false;
         }
 
@@ -250,6 +329,7 @@ function EndfieldStatisticsPage() {
     allCharacters,
     keyword,
     ownershipFilter,
+    myOwnedCharacterIdSet,
     characterRarityFilter,
     elementFilter,
     classFilter,
@@ -262,7 +342,7 @@ function EndfieldStatisticsPage() {
 
     const source =
       ownershipFilter === "ownedOnly"
-        ? allWeapons.filter((weapon) => weapon.ownedCount > 0)
+        ? allWeapons.filter((weapon) => myOwnedWeaponIdSet.has(weapon.weaponId))
         : allWeapons;
 
     return source
@@ -331,6 +411,7 @@ function EndfieldStatisticsPage() {
     allWeapons,
     keyword,
     ownershipFilter,
+    myOwnedWeaponIdSet,
     weaponRarityFilter,
     weaponTypeFilter,
     sortMode,
@@ -462,8 +543,16 @@ function EndfieldStatisticsPage() {
                     ownershipFilter === "ownedOnly" ? "active" : ""
                   }`}
                   onClick={() => setOwnershipFilter("ownedOnly")}
+                  disabled={!currentRoleId}
+                  title={
+                    currentRoleId
+                      ? `현재 roleId ${currentRoleId} 기준으로 필터링합니다.`
+                      : "확장 프로그램에서 데이터를 감지한 뒤 사용할 수 있습니다."
+                  }
                 >
-                  {viewMode === "characters" ? "보유 캐릭터만" : "보유 무기만"}
+                  {viewMode === "characters"
+                    ? "내 보유 캐릭터만"
+                    : "내 보유 무기만"}
                 </button>
               </div>
 
@@ -641,7 +730,7 @@ function CharacterFilters({
         >
           전체
         </FilterButton>
-        {Object.entries(CHARACTER_CLASS_LABEL).map(([key, label]) => (
+        {Object.entries(CHARACTER_PROFESSION_LABEL).map(([key, label]) => (
           <FilterButton
             key={key}
             active={classFilter === key}
@@ -745,6 +834,7 @@ function CharacterStatisticsGrid({
     <div className="collection-grid">
       {characters.map((character, index) => {
         const meta = getCharacterMeta(character.charId);
+        const rate = Math.min(character.ownershipRate, 100);
 
         return (
           <article
@@ -753,6 +843,30 @@ function CharacterStatisticsGrid({
             onClick={() => onSelect(character.charId)}
           >
             <div className="collection-image-area">
+              <div className="character-icon-stack">
+                <div className="character-mini-icon">
+                  {meta.element === "unknown" ? (
+                    <span>미분류</span>
+                  ) : (
+                    <img
+                      src={getElementIconPath(meta.element)}
+                      alt={CHARACTER_ELEMENT_LABEL[meta.element]}
+                    />
+                  )}
+                </div>
+
+                <div className="character-mini-icon">
+                  {meta.profession === "unknown" ? (
+                    <span>미분류</span>
+                  ) : (
+                    <img
+                      src={getProfessionIconPath(meta.profession)}
+                      alt={CHARACTER_PROFESSION_LABEL[meta.profession]}
+                    />
+                  )}
+                </div>
+              </div>
+
               <img
                 referrerPolicy="no-referrer"
                 className="collection-image character-art"
@@ -776,11 +890,20 @@ function CharacterStatisticsGrid({
               <div className="collection-detail">
                 {CHARACTER_RARITY_LABEL[meta.rarity]} ·{" "}
                 {CHARACTER_ELEMENT_LABEL[meta.element]} ·{" "}
-                {CHARACTER_CLASS_LABEL[meta.classType]}
+                {CHARACTER_PROFESSION_LABEL[meta.profession]}
               </div>
             </div>
 
-            <RateRing rate={character.ownershipRate} />
+            <div
+              className="collection-rate-ring"
+              style={
+                {
+                  "--rate": `${rate}%`,
+                } as CSSProperties
+              }
+            >
+              {formatRate(character.ownershipRate)}%
+            </div>
           </article>
         );
       })}
@@ -808,6 +931,7 @@ function WeaponStatisticsGrid({
     <div className="collection-grid">
       {weapons.map((weapon, index) => {
         const meta = getWeaponMeta(weapon.weaponId);
+        const rate = Math.min(weapon.ownershipRate, 100);
 
         return (
           <article
@@ -842,27 +966,19 @@ function WeaponStatisticsGrid({
               </div>
             </div>
 
-            <RateRing rate={weapon.ownershipRate} />
+            <div
+              className="collection-rate-ring"
+              style={
+                {
+                  "--rate": `${rate}%`,
+                } as CSSProperties
+              }
+            >
+              {formatRate(weapon.ownershipRate)}%
+            </div>
           </article>
         );
       })}
-    </div>
-  );
-}
-
-function RateRing({ rate }: { rate: number }) {
-  const safeRate = Math.max(0, Math.min(rate, 100));
-
-  return (
-    <div
-      className="collection-rate-ring"
-      style={
-        {
-          "--rate": `${safeRate}%`,
-        } as CSSProperties
-      }
-    >
-      <div className="collection-rate-ring-inner">{rate}%</div>
     </div>
   );
 }
@@ -920,6 +1036,14 @@ function getRarityRank(rarity: number | string) {
   if (rarity === 5) return 5;
   if (rarity === 4) return 4;
   return 0;
+}
+
+function formatRate(rate: number) {
+  if (Number.isInteger(rate)) {
+    return String(rate);
+  }
+
+  return rate.toFixed(1);
 }
 
 function EmptyState({

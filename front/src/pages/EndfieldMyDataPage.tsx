@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../api/config";
 import {
-  CHARACTER_CLASS_LABEL,
+  CHARACTER_PROFESSION_LABEL,
   CHARACTER_ELEMENT_LABEL,
   CHARACTER_PLACEHOLDER_IMAGE,
   CHARACTER_RARITY_LABEL,
@@ -35,6 +35,8 @@ type Weapon = {
 
 type ViewMode = "characters" | "weapons";
 
+type MyDataSortMode = "levelDesc" | "evolveDesc" | "nameAsc" | "rarityDesc";
+
 type EmptyStateProps = {
   eyebrow?: string;
   title: string;
@@ -42,6 +44,14 @@ type EmptyStateProps = {
   actionLabel?: string;
   actionHref?: string;
 };
+
+function getElementIconPath(element: string) {
+  return `/icons/endfield/elements/${element}.png`;
+}
+
+function getProfessionIconPath(profession: string) {
+  return `/icons/endfield/professions/${profession}.png`;
+}
 
 function EndfieldMyDataPage() {
   const { roleId } = useParams<{ roleId: string }>();
@@ -52,8 +62,15 @@ function EndfieldMyDataPage() {
   const [weapons, setWeapons] = useState<Weapon[]>([]);
   const [viewMode, setViewMode] = useState<ViewMode>("characters");
   const [keyword, setKeyword] = useState("");
+  const [sortMode, setSortMode] = useState<MyDataSortMode>("levelDesc");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!roleId) return;
+
+    localStorage.setItem("aic:lastRoleId", roleId);
+  }, [roleId]);
 
   useEffect(() => {
     if (!roleId) return;
@@ -91,28 +108,66 @@ function EndfieldMyDataPage() {
     return characters
       .filter((character) => character.owned)
       .sort((a, b) => {
-        if (b.level !== a.level) return b.level - a.level;
-        if (b.evolvePhase !== a.evolvePhase) {
-          return b.evolvePhase - a.evolvePhase;
-        }
+        const aMeta = getCharacterMeta(a.charId);
+        const bMeta = getCharacterMeta(b.charId);
 
-        return getCharacterMeta(a.charId).name.localeCompare(
-          getCharacterMeta(b.charId).name,
-          "ko-KR",
-        );
+        switch (sortMode) {
+          case "evolveDesc":
+            if (b.evolvePhase !== a.evolvePhase) {
+              return b.evolvePhase - a.evolvePhase;
+            }
+            if (b.level !== a.level) {
+              return b.level - a.level;
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "nameAsc":
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "rarityDesc":
+            if (getRarityRank(bMeta.rarity) !== getRarityRank(aMeta.rarity)) {
+              return getRarityRank(bMeta.rarity) - getRarityRank(aMeta.rarity);
+            }
+            if (b.level !== a.level) {
+              return b.level - a.level;
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "levelDesc":
+          default:
+            if (b.level !== a.level) {
+              return b.level - a.level;
+            }
+            if (b.evolvePhase !== a.evolvePhase) {
+              return b.evolvePhase - a.evolvePhase;
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+        }
       });
-  }, [characters]);
+  }, [characters, sortMode]);
 
   const ownedWeapons = useMemo(() => {
     return weapons
       .filter((weapon) => weapon.owned)
       .sort((a, b) => {
-        return getWeaponMeta(a.weaponId).name.localeCompare(
-          getWeaponMeta(b.weaponId).name,
-          "ko-KR",
-        );
+        const aMeta = getWeaponMeta(a.weaponId);
+        const bMeta = getWeaponMeta(b.weaponId);
+
+        switch (sortMode) {
+          case "rarityDesc":
+            if (getRarityRank(bMeta.rarity) !== getRarityRank(aMeta.rarity)) {
+              return getRarityRank(bMeta.rarity) - getRarityRank(aMeta.rarity);
+            }
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+
+          case "nameAsc":
+          case "levelDesc":
+          case "evolveDesc":
+          default:
+            return aMeta.name.localeCompare(bMeta.name, "ko-KR");
+        }
       });
-  }, [weapons]);
+  }, [weapons, sortMode]);
 
   const filteredCharacters = useMemo(() => {
     const trimmed = keyword.trim().toLowerCase();
@@ -198,7 +253,10 @@ function EndfieldMyDataPage() {
               </p>
             </div>
 
-            <Link className="entity-tab" to="/endfield/statistics">
+            <Link
+              className="entity-tab"
+              to={`/endfield/statistics?roleId=${profile?.roleId ?? roleId}`}
+            >
               전체 통계 보기
             </Link>
           </div>
@@ -213,6 +271,7 @@ function EndfieldMyDataPage() {
                   onClick={() => {
                     setViewMode("characters");
                     setKeyword("");
+                    setSortMode("levelDesc");
                   }}
                 >
                   캐릭터 {ownedCharacters.length}
@@ -225,6 +284,7 @@ function EndfieldMyDataPage() {
                   onClick={() => {
                     setViewMode("weapons");
                     setKeyword("");
+                    setSortMode("nameAsc");
                   }}
                 >
                   무기 {ownedWeapons.length}
@@ -233,6 +293,28 @@ function EndfieldMyDataPage() {
             </div>
 
             <div className="toolbar-right">
+              <select
+                className="sort-select"
+                value={sortMode}
+                onChange={(event) =>
+                  setSortMode(event.target.value as MyDataSortMode)
+                }
+              >
+                {viewMode === "characters" ? (
+                  <>
+                    <option value="levelDesc">레벨 높은 순</option>
+                    <option value="evolveDesc">정예화 높은 순</option>
+                    <option value="nameAsc">이름순</option>
+                    <option value="rarityDesc">성급 높은 순</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="nameAsc">이름순</option>
+                    <option value="rarityDesc">성급 높은 순</option>
+                  </>
+                )}
+              </select>
+
               <input
                 className="search-input"
                 value={keyword}
@@ -306,6 +388,22 @@ function CharacterShowcaseGrid({
             onClick={() => onSelect(character.charId)}
           >
             <div className="collection-image-area">
+              <div className="character-icon-stack">
+                <div className="character-mini-icon">
+                  <img
+                    src={getElementIconPath(meta.element)}
+                    alt={CHARACTER_ELEMENT_LABEL[meta.element]}
+                  />
+                </div>
+
+                <div className="character-mini-icon">
+                  <img
+                    src={getProfessionIconPath(meta.profession)}
+                    alt={CHARACTER_PROFESSION_LABEL[meta.profession]}
+                  />
+                </div>
+              </div>
+
               <img
                 referrerPolicy="no-referrer"
                 className="collection-image character-art"
@@ -329,7 +427,7 @@ function CharacterShowcaseGrid({
               <div className="collection-detail">
                 {CHARACTER_RARITY_LABEL[meta.rarity]} ·{" "}
                 {CHARACTER_ELEMENT_LABEL[meta.element]} ·{" "}
-                {CHARACTER_CLASS_LABEL[meta.classType]}
+                {CHARACTER_PROFESSION_LABEL[meta.profession]}
               </div>
             </div>
 
@@ -412,6 +510,13 @@ function StatCard({ title, value }: StatCardProps) {
       <div className="stat-value">{value}</div>
     </div>
   );
+}
+
+function getRarityRank(rarity: number | string) {
+  if (rarity === 6) return 6;
+  if (rarity === 5) return 5;
+  if (rarity === 4) return 4;
+  return 0;
 }
 
 function formatDateTime(value?: string) {

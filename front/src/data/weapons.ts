@@ -2,10 +2,10 @@ export type WeaponRarity = 4 | 5 | 6 | "unknown";
 
 export type WeaponType =
   | "sword"
-  | "great_sword"
-  | "polearm"
-  | "handcannon"
-  | "arts_unit"
+  | "claymores"
+  | "lance"
+  | "pistol"
+  | "wand"
   | "unknown";
 
 export type WeaponSkill = {
@@ -25,716 +25,1223 @@ export type WeaponMeta = {
 };
 
 export const WEAPON_META_MAP: Record<string, WeaponMeta> = {
-  "eaa20a24296b84e8be8f8947170a02ec": {
+  eaa20a24296b84e8be8f8947170a02ec: {
     weaponId: "eaa20a24296b84e8be8f8947170a02ec",
     name: "등불의 사명",
     rarity: 6,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20260604/82813c2aedeb43ed85ea15cbbf6aed10.png",
-    description: "노스마치 중공업 지원소의 구형 제품, 조작성은 떨어지지만 놀라운 위력을 자랑합니다. 지나친 무게 탓에 대중에게 환영받지는 못하지만, 과감한 전투 스타일을 선호하는 이들에게는 큰 인기를 끌고 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_usgs_high","value":"궁극기 충전 효율 증가 · 대"},{"key":"sk_wpn_lance_0007","value":"효율 · 불빛 연소"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20260604/82813c2aedeb43ed85ea15cbbf6aed10.png",
+    description:
+      "노스마치 중공업 지원소의 구형 제품, 조작성은 떨어지지만 놀라운 위력을 자랑합니다. 지나친 무게 탓에 대중에게 환영받지는 못하지만, 과감한 전투 스타일을 선호하는 이들에게는 큰 인기를 끌고 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_usgs_high", value: "궁극기 충전 효율 증가 · 대" },
+      { key: "sk_wpn_lance_0007", value: "효율 · 불빛 연소" },
+    ],
   },
   "235fba8ef752b32a7534e1c6dec9720b": {
     weaponId: "235fba8ef752b32a7534e1c6dec9720b",
     name: "적영",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20260604/03277d1d860facfde22aa2007ed63450.png",
-    description: "홍산 선검국이 십여 년간 공들여 설계하고 제작한 대검, 만듦새가 정교하며, 휘두를 때 뿜어내는 기세가 맹렬합니다. 육중한 중무기의 표본과도 같은 걸작입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_high","value":"힘 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_claym_0017","value":"기예 · 붉은색의 단절"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20260604/03277d1d860facfde22aa2007ed63450.png",
+    description:
+      "홍산 선검국이 십여 년간 공들여 설계하고 제작한 대검, 만듦새가 정교하며, 휘두를 때 뿜어내는 기세가 맹렬합니다. 육중한 중무기의 표본과도 같은 걸작입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_high", value: "힘 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_claym_0017", value: "기예 · 붉은색의 단절" },
+    ],
   },
-  "aff6c929663f27d14cf618acb0304405": {
+  aff6c929663f27d14cf618acb0304405: {
     weaponId: "aff6c929663f27d14cf618acb0304405",
     name: "환상통",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20260604/9f79e3b57070e77988a25df2db577fc2.png",
-    description: "경량 초자연 기술 실험실의 실험형 제품, 검신에 첨단 소재를 사용해 무게가 매우 가볍습니다. 물론, 그 파괴력까지 줄어든 것은 아닙니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_high","value":"힘 증가 · 대"},{"key":"wpn_sp_attr_phy_spell_high","value":"오리지늄 아츠 강도 증가 · 대"},{"key":"sk_wpn_claym_0016","value":"억제 · 고통 누적"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20260604/9f79e3b57070e77988a25df2db577fc2.png",
+    description:
+      "경량 초자연 기술 실험실의 실험형 제품, 검신에 첨단 소재를 사용해 무게가 매우 가볍습니다. 물론, 그 파괴력까지 줄어든 것은 아닙니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_high", value: "힘 증가 · 대" },
+      {
+        key: "wpn_sp_attr_phy_spell_high",
+        value: "오리지늄 아츠 강도 증가 · 대",
+      },
+      { key: "sk_wpn_claym_0016", value: "억제 · 고통 누적" },
+    ],
   },
   "6c5d4ace32ad675ad62d3dbed2ce36fe": {
     weaponId: "6c5d4ace32ad675ad62d3dbed2ce36fe",
     name: "고독한 나룻배",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20260416/2d4d91d21ff658b02d38729c5a7c9944.png",
-    description: "홍산 선검국에서 개발한 아츠 유닛, 식양과 결합한 신형 재료를 과감하게 채택했습니다. 우수한 성능으로 아츠 효율을 대폭 높일 수 있지만, 사용자에게는 일정 수준 이상의 조작 능력이 요구됩니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_funnel_0015","value":"억제 · 떠도는 번개"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20260416/2d4d91d21ff658b02d38729c5a7c9944.png",
+    description:
+      "홍산 선검국에서 개발한 아츠 유닛, 식양과 결합한 신형 재료를 과감하게 채택했습니다. 우수한 성능으로 아츠 효율을 대폭 높일 수 있지만, 사용자에게는 일정 수준 이상의 조작 능력이 요구됩니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_funnel_0015", value: "억제 · 떠도는 번개" },
+    ],
   },
   "52e6d7099938bdd6136355c9038a07e0": {
     weaponId: "52e6d7099938bdd6136355c9038a07e0",
     name: "안개 속 불빛",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20260416/2a7742bff876e26412c66d3eb8033fe5.png",
-    description: "엔드필드 공업의 클래식 제품, 극점 원정 시기에 대량으로 투입되었습니다. 황금색 도장이 유독 눈에 띄며, 하늘을 뒤덮는 눈보라 속에서도 선명하게 보입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_electrondam_high","value":"전기 피해 증가 · 대"},{"key":"sk_wpn_funnel_0017","value":"효율 · 중첩된 빛"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20260416/2a7742bff876e26412c66d3eb8033fe5.png",
+    description:
+      "엔드필드 공업의 클래식 제품, 극점 원정 시기에 대량으로 투입되었습니다. 황금색 도장이 유독 눈에 띄며, 하늘을 뒤덮는 눈보라 속에서도 선명하게 보입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_electrondam_high", value: "전기 피해 증가 · 대" },
+      { key: "sk_wpn_funnel_0017", value: "효율 · 중첩된 빛" },
+    ],
   },
   "1289c1b863eb801da6e4b618f4625227": {
     weaponId: "1289c1b863eb801da6e4b618f4625227",
     name: "늑대의 혈흔",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20260310/dfa304b9de55a75bce9b5719e7cf1d59.png",
-    description: "레이시언 공업이 생산한 인기 장검. 암시장 경로를 통해 문명 밴드 밖으로 유통되며, 랜드브레이커 사이에서 특히 인기가 높습니다. 많은 이들이 여기에 특수 개조 모듈을 추가하곤 합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_sword_0022","value":"골절 · 군랑의 포식"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20260310/dfa304b9de55a75bce9b5719e7cf1d59.png",
+    description:
+      "레이시언 공업이 생산한 인기 장검. 암시장 경로를 통해 문명 밴드 밖으로 유통되며, 랜드브레이커 사이에서 특히 인기가 높습니다. 많은 이들이 여기에 특수 개조 모듈을 추가하곤 합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_sword_0022", value: "골절 · 군랑의 포식" },
+    ],
   },
-  "ce921de1dd2c99cd8822239db886c08e": {
+  ce921de1dd2c99cd8822239db886c08e: {
     weaponId: "ce921de1dd2c99cd8822239db886c08e",
     name: "반항",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20260310/675ec992ee25214d0af5cdb60ccd893a.png",
-    description: "홍산 선검국이 개발한 총기, 디자인은 간단하지만 재료가 탄탄하고, 휴대가 편리하여 각종 복잡한 환경에서도 제약 없이 사용할 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_pistol_0011","value":"방출 · 토벌의 원한"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20260310/675ec992ee25214d0af5cdb60ccd893a.png",
+    description:
+      "홍산 선검국이 개발한 총기, 디자인은 간단하지만 재료가 탄탄하고, 휴대가 편리하여 각종 복잡한 환경에서도 제약 없이 사용할 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_pistol_0011", value: "방출 · 토벌의 원한" },
+    ],
   },
   "4d08e6a691b9e864719e65183455b186": {
     weaponId: "4d08e6a691b9e864719e65183455b186",
     name: "찬란했던 기억",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20260310/30e5493803ac4b8c97c78f4f62124de8.png",
-    description: "용광로 요새에서 단조한 무기 중 하나, 형태가 우아하고 정교해 전선에서의 격전보다는 철의 서약군의 의식 자리에서 주로 사용됩니다. 칼날은 여러 차례 정밀한 연마를 거쳐 예리함이 극에 달했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_sword_0017","value":"어둠 · 사라지지 않은 여광"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20260310/30e5493803ac4b8c97c78f4f62124de8.png",
+    description:
+      "용광로 요새에서 단조한 무기 중 하나, 형태가 우아하고 정교해 전선에서의 격전보다는 철의 서약군의 의식 자리에서 주로 사용됩니다. 칼날은 여러 차례 정밀한 연마를 거쳐 예리함이 극에 달했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_sword_0017", value: "어둠 · 사라지지 않은 여광" },
+    ],
   },
   "8d4ce28361d86b4d85bd13258decc134": {
     weaponId: "8d4ce28361d86b4d85bd13258decc134",
     name: "향수",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20260310/6ceaca5ae2e9424c081a8c6ea7d2c90e.png",
-    description: "홍산 선검국이 개발한 총기, 홍산 과학원 무장 부대의 기본 방침에 맞추기 위해 디자인 단계에서 무게를 줄였고, 그립감을 최적화했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_crystdam_high","value":"냉기 피해 증가 · 대"},{"key":"sk_wpn_pistol_0007","value":"억제 · 옛 시절의 달"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20260310/6ceaca5ae2e9424c081a8c6ea7d2c90e.png",
+    description:
+      "홍산 선검국이 개발한 총기, 홍산 과학원 무장 부대의 기본 방침에 맞추기 위해 디자인 단계에서 무게를 줄였고, 그립감을 최적화했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_crystdam_high", value: "냉기 피해 증가 · 대" },
+      { key: "sk_wpn_pistol_0007", value: "억제 · 옛 시절의 달" },
+    ],
   },
   "7ea6fda78e8ed859112768f41d294135": {
     weaponId: "7ea6fda78e8ed859112768f41d294135",
     name: "J.E.T.",
     rarity: 6,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/e14a756fa991a3520b8e017b2f8c5370.png",
-    description: "노스마치 중공업 지원소의 실험형 고급 제품, 지금은 해체된 항공기 연구 센터에서 그 원형을 설계했습니다. 이 장비는 오리지늄 가압 분사기를 탑재하여 놀라운 성능을 자랑합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_lance_0011","value":"억제 · 천체 물리학"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/e14a756fa991a3520b8e017b2f8c5370.png",
+    description:
+      "노스마치 중공업 지원소의 실험형 고급 제품, 지금은 해체된 항공기 연구 센터에서 그 원형을 설계했습니다. 이 장비는 오리지늄 가압 분사기를 탑재하여 놀라운 성능을 자랑합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_lance_0011", value: "억제 · 천체 물리학" },
+    ],
   },
   "512be003fe4d01f224fdb368163b7ba2": {
     weaponId: "512be003fe4d01f224fdb368163b7ba2",
     name: "과거의 일품",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/8721e070d5843449b1d8c5dc4956cf37.png",
-    description: "노스마치 중공업 지원소의 고급 제품, 구식 기술로 설계된 체인 커터로, 현재는 대규모 생산이 이루어지고 있지 않지만, 여전히 신뢰할 수 있는 설계와 품질을 자랑합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_hp_high","value":"생명력 증가 · 대"},{"key":"sk_wpn_claym_0006","value":"효율 · 절개 의료법"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/8721e070d5843449b1d8c5dc4956cf37.png",
+    description:
+      "노스마치 중공업 지원소의 고급 제품, 구식 기술로 설계된 체인 커터로, 현재는 대규모 생산이 이루어지고 있지 않지만, 여전히 신뢰할 수 있는 설계와 품질을 자랑합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_hp_high", value: "생명력 증가 · 대" },
+      { key: "sk_wpn_claym_0006", value: "효율 · 절개 의료법" },
+    ],
   },
   "32c182c9c477a89326127ade660818c7": {
     weaponId: "32c182c9c477a89326127ade660818c7",
     name: "기사도 정신",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/080d7728f44c14eda6beb4bfca99340e.png",
-    description: "미에슈코 공업에서 개발한 아츠 유닛 중 하나, 특수 제작된 D64강을 사용했고, 다양한 맞춤형 모듈을 탑재했습니다. 이 제품은 과거 경기장의 불꽃놀이를 연상시킵니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_hp_high","value":"생명력 증가 · 대"},{"key":"sk_wpn_funnel_0010","value":"의료 · 침식성 광기의 불꽃"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/080d7728f44c14eda6beb4bfca99340e.png",
+    description:
+      "미에슈코 공업에서 개발한 아츠 유닛 중 하나, 특수 제작된 D64강을 사용했고, 다양한 맞춤형 모듈을 탑재했습니다. 이 제품은 과거 경기장의 불꽃놀이를 연상시킵니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_hp_high", value: "생명력 증가 · 대" },
+      { key: "sk_wpn_funnel_0010", value: "의료 · 침식성 광기의 불꽃" },
+    ],
   },
   "1f6c6779adca65f349b5ba0fede248cc": {
     weaponId: "1f6c6779adca65f349b5ba0fede248cc",
     name: "끝없는 방랑",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/21532368a8d1075f3259f51eb226f9b3.png",
-    description: "용광로 요새에서 제작한 무기 중 하나, 거듭된 재단조로 겉으로 드러나는 날카로움은 줄었지만, 여전히 압도적인 위압감을 내뿜습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_sword_0016","value":"흐름 · 윤회"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/21532368a8d1075f3259f51eb226f9b3.png",
+    description:
+      "용광로 요새에서 제작한 무기 중 하나, 거듭된 재단조로 겉으로 드러나는 날카로움은 줄었지만, 여전히 압도적인 위압감을 내뿜습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_sword_0016", value: "흐름 · 윤회" },
+    ],
   },
-  "dcd32e34b669310c992f590b65c7460a": {
+  dcd32e34b669310c992f590b65c7460a: {
     weaponId: "dcd32e34b669310c992f590b65c7460a",
     name: "망각",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/06a495e79285060a9227144e24922c69.png",
-    description: "주술 타임에서 개발한 아츠 유닛 중 하나, 기본적인 오리지늄 회로 외에는 모든 재료가 베일에 싸여있습니다. 정말로 이것이 탈로스 II에서 만들어질 수 있는 물건이란 말인가?",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_magicdam_high","value":"아츠 피해 증가 · 대"},{"key":"sk_wpn_funnel_0009","value":"어둠 · 치욕"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/06a495e79285060a9227144e24922c69.png",
+    description:
+      "주술 타임에서 개발한 아츠 유닛 중 하나, 기본적인 오리지늄 회로 외에는 모든 재료가 베일에 싸여있습니다. 정말로 이것이 탈로스 II에서 만들어질 수 있는 물건이란 말인가?",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_magicdam_high", value: "아츠 피해 증가 · 대" },
+      { key: "sk_wpn_funnel_0009", value: "어둠 · 치욕" },
+    ],
   },
-  "dae902519985b07a6f1825933f5eb545": {
+  dae902519985b07a6f1825933f5eb545: {
     weaponId: "dae902519985b07a6f1825933f5eb545",
     name: "모범",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/834377216c17731627ab8fd1bb1c4de6.png",
-    description: "미에슈코 공업이 최근 출시한 독자 개발 제품, 고요한 수도회에서 발굴한 유물을 바탕으로 설계되었다는 소문이 있으며, 극비 기술을 내장하여 그 어떤 것도 파괴할 수 있다고 합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_claym_0004","value":"억제 · 다층 절단"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/834377216c17731627ab8fd1bb1c4de6.png",
+    description:
+      "미에슈코 공업이 최근 출시한 독자 개발 제품, 고요한 수도회에서 발굴한 유물을 바탕으로 설계되었다는 소문이 있으며, 극비 기술을 내장하여 그 어떤 것도 파괴할 수 있다고 합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_claym_0004", value: "억제 · 다층 절단" },
+    ],
   },
   "8877b231ab331837d0aa12a12b6d8184": {
     weaponId: "8877b231ab331837d0aa12a12b6d8184",
     name: "바다와 별의 꿈",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/fe34d89d2e92df4d993a4fc881b3d6d8.png",
-    description: "미에슈코 공업의 고급 라인 제품 중 하나, 우수한 오리지늄 아츠 전도성으로 겉만 화려한 다른 유행 제품들과 달리 실속을 갖추었습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_heal_high","value":"치유 효율 증가 · 대"},{"key":"sk_wpn_funnel_0013","value":"고통 · 밀물과 썰물의 속삭임"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/fe34d89d2e92df4d993a4fc881b3d6d8.png",
+    description:
+      "미에슈코 공업의 고급 라인 제품 중 하나, 우수한 오리지늄 아츠 전도성으로 겉만 화려한 다른 유행 제품들과 달리 실속을 갖추었습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_heal_high", value: "치유 효율 증가 · 대" },
+      { key: "sk_wpn_funnel_0013", value: "고통 · 밀물과 썰물의 속삭임" },
+    ],
   },
-  "d160327332e2c2ef4845d6594dcb830a": {
+  d160327332e2c2ef4845d6594dcb830a: {
     weaponId: "d160327332e2c2ef4845d6594dcb830a",
     name: "백야의 별",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/8ce5ebbe137803a42fe5e65024613afa.png",
-    description: "용광로 요새에서 제작한 무기 중 하나, 손잡이는 헤어라인 가공을 통해 마찰력을 높여, 훌륭한 그립감을 제공합니다. 검신은 황무지에서 채굴된 희귀 광석으로 만들어졌습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_phy_spell_high","value":"오리지늄 아츠 강도 증가 · 대"},{"key":"sk_wpn_sword_0014","value":"고통 · 백야의 별"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/8ce5ebbe137803a42fe5e65024613afa.png",
+    description:
+      "용광로 요새에서 제작한 무기 중 하나, 손잡이는 헤어라인 가공을 통해 마찰력을 높여, 훌륭한 그립감을 제공합니다. 검신은 황무지에서 채굴된 희귀 광석으로 만들어졌습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      {
+        key: "wpn_sp_attr_phy_spell_high",
+        value: "오리지늄 아츠 강도 증가 · 대",
+      },
+      { key: "sk_wpn_sword_0014", value: "고통 · 백야의 별" },
+    ],
   },
   "1a5102bf38040b123846906ec1a62ba4": {
     weaponId: "1a5102bf38040b123846906ec1a62ba4",
     name: "부요",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/46acd1276237a42b6843b53cb58310cb.png",
-    description: "홍산 선검국에서 제작한 고급 사브르 제품, 탁월한 공로를 인정받은 이들에게 수여하며, 명칭은 홍산 과학원 내부 공모를 통해 선정되었습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_sword_0011","value":"어둠 · 청운"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/46acd1276237a42b6843b53cb58310cb.png",
+    description:
+      "홍산 선검국에서 제작한 고급 사브르 제품, 탁월한 공로를 인정받은 이들에게 수여하며, 명칭은 홍산 과학원 내부 공모를 통해 선정되었습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_sword_0011", value: "어둠 · 청운" },
+    ],
   },
   "4b89816e49cfa10aae0a1dabcef731af": {
     weaponId: "4b89816e49cfa10aae0a1dabcef731af",
     name: "분쇄의 군주",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/e623f878f4f313c66c04ea53e16f6008.png",
-    description: "주술 타임에서 출시한 한정판 특수 무기 중 하나, 어떤 고대 전설에서 영감받은 듯한 외형으로, 악몽 속 절규를 현실로 끌어낸 듯한 섬뜩한 아우라를 발산합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_high","value":"힘 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_claym_0008","value":"분쇄 · 군왕의 위세"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/e623f878f4f313c66c04ea53e16f6008.png",
+    description:
+      "주술 타임에서 출시한 한정판 특수 무기 중 하나, 어떤 고대 전설에서 영감받은 듯한 외형으로, 악몽 속 절규를 현실로 끌어낸 듯한 섬뜩한 아우라를 발산합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_high", value: "힘 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_claym_0008", value: "분쇄 · 군왕의 위세" },
+    ],
   },
   "5d078dc9ff25d344de5629a76c3e7b6b": {
     weaponId: "5d078dc9ff25d344de5629a76c3e7b6b",
     name: "사명의 길",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/8f19eae925ad285349eb47f22f3f4f9e.png",
-    description: "레이시언 공업의 대표적인 첨단 제품, 제1차 아겔로스 전쟁 당시 처음 프로토타입을 투입한 이후 꾸준히 개량을 거듭해 왔으며, 강력한 화력으로 확실한 안전을 보장합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_usgs_high","value":"궁극기 충전 효율 증가 · 대"},{"key":"sk_wpn_funnel_0011","value":"추격 · 굴하지 않는 사명"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/8f19eae925ad285349eb47f22f3f4f9e.png",
+    description:
+      "레이시언 공업의 대표적인 첨단 제품, 제1차 아겔로스 전쟁 당시 처음 프로토타입을 투입한 이후 꾸준히 개량을 거듭해 왔으며, 강력한 화력으로 확실한 안전을 보장합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_usgs_high", value: "궁극기 충전 효율 증가 · 대" },
+      { key: "sk_wpn_funnel_0011", value: "추격 · 굴하지 않는 사명" },
+    ],
   },
-  "b66dd0f5e61f2a3231f6faf661daba62": {
+  b66dd0f5e61f2a3231f6faf661daba62: {
     weaponId: "b66dd0f5e61f2a3231f6faf661daba62",
     name: "산의 지배자",
     rarity: 6,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/b4827d12232501551485e0c9f671caa8.png",
-    description: "홍산 선검국에서 개발한 실험형 장창, 창대 주조 시 매우 특수한 금 합금을 혼합하여 강도를 유지하면서도 유연성을 대폭 증가시켰습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_phydam_high","value":"물리 피해 증가 · 대"},{"key":"sk_wpn_lance_0012","value":"효율 · 하나 되는 자연"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/b4827d12232501551485e0c9f671caa8.png",
+    description:
+      "홍산 선검국에서 개발한 실험형 장창, 창대 주조 시 매우 특수한 금 합금을 혼합하여 강도를 유지하면서도 유연성을 대폭 증가시켰습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_phydam_high", value: "물리 피해 증가 · 대" },
+      { key: "sk_wpn_lance_0012", value: "효율 · 하나 되는 자연" },
+    ],
   },
   "1acd37e11e3b2b15b9c96341496608dc": {
     weaponId: "1acd37e11e3b2b15b9c96341496608dc",
     name: "쐐기",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/599bc5ee4e3021f311259985c844107d.png",
-    description: "노스마치 중공업 지원소의 전설적인 제품, 노스마치 중공업의 스타일인 '강력한 파괴력, 절대적인 신뢰성, 그리고 어려운 조작성'을 완벽히 구현했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_pistol_0008","value":"고통 · 문명의 쐐기"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/599bc5ee4e3021f311259985c844107d.png",
+    description:
+      "노스마치 중공업 지원소의 전설적인 제품, 노스마치 중공업의 스타일인 '강력한 파괴력, 절대적인 신뢰성, 그리고 어려운 조작성'을 완벽히 구현했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_pistol_0008", value: "고통 · 문명의 쐐기" },
+    ],
   },
   "8182e1845511b4c3c880eff94d757c8a": {
     weaponId: "8182e1845511b4c3c880eff94d757c8a",
     name: "암흑의 횃불",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/f67ca28a6489e356f928c9c9ef1b61eb.png",
-    description: "레이시언 공업에서 출시한 차세대 경량화 무기, 검신 전체가 특수 제작된 합성 금속으로 만들어졌으며, '전문가'들에게 큰 인기를 끌고 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_firedam_high","value":"열기 피해 증가 · 대"},{"key":"sk_wpn_sword_0010","value":"고통 · 쌓이는 탐욕"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/f67ca28a6489e356f928c9c9ef1b61eb.png",
+    description:
+      "레이시언 공업에서 출시한 차세대 경량화 무기, 검신 전체가 특수 제작된 합성 금속으로 만들어졌으며, '전문가'들에게 큰 인기를 끌고 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_firedam_high", value: "열기 피해 증가 · 대" },
+      { key: "sk_wpn_sword_0010", value: "고통 · 쌓이는 탐욕" },
+    ],
   },
   "66cc7d14dddc8b486364ce2363b6adda": {
     weaponId: "66cc7d14dddc8b486364ce2363b6adda",
     name: "예술의 폭군",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/e830bac5069e162919e0478eabbbe32b.png",
-    description: "미에슈코 공업이 야심차게 선보인 아티스트 콜라보레이션 시리즈의 베스트셀러 중 하나, 독창적인 디자인과 압도적인 성능의 완벽한 조화로, 중고 시장에서의 높은 프리미엄이 폭발적인 인기를 입증합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_crirate_high","value":"치명타 확률 증가 · 대"},{"key":"sk_wpn_pistol_0010","value":"골절 · 예술적 폭론"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/e830bac5069e162919e0478eabbbe32b.png",
+    description:
+      "미에슈코 공업이 야심차게 선보인 아티스트 콜라보레이션 시리즈의 베스트셀러 중 하나, 독창적인 디자인과 압도적인 성능의 완벽한 조화로, 중고 시장에서의 높은 프리미엄이 폭발적인 인기를 입증합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_crirate_high", value: "치명타 확률 증가 · 대" },
+      { key: "sk_wpn_pistol_0010", value: "골절 · 예술적 폭론" },
+    ],
   },
   "6609d9a542d7b96db8f336bbcf2d09aa": {
     weaponId: "6609d9a542d7b96db8f336bbcf2d09aa",
     name: "용사",
     rarity: 6,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/4ddda228c48188b4b9b1791dc0a73bd0.png",
-    description: "미에슈코 공업의 중급 라인 제품 중 하나, 레트로 대형 화살 디자인과 뛰어난 실전 활용성 덕분에 오늘날에도 가격을 매길 수 없는 가치를 자랑합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_phydam_high","value":"물리 피해 증가 · 대"},{"key":"sk_wpn_lance_0010","value":"기예 · 좋은 품성의 결실"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/4ddda228c48188b4b9b1791dc0a73bd0.png",
+    description:
+      "미에슈코 공업의 중급 라인 제품 중 하나, 레트로 대형 화살 디자인과 뛰어난 실전 활용성 덕분에 오늘날에도 가격을 매길 수 없는 가치를 자랑합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_phydam_high", value: "물리 피해 증가 · 대" },
+      { key: "sk_wpn_lance_0010", value: "기예 · 좋은 품성의 결실" },
+    ],
   },
-  "a2fc188efeb10de2af2da9678d333853": {
+  a2fc188efeb10de2af2da9678d333853: {
     weaponId: "a2fc188efeb10de2af2da9678d333853",
     name: "용조의 불꽃",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/703f5b0563a10737f1a8a9ed2e3f9640.png",
-    description: "주술 타임에서 제작한 날카로운 무기 중 하나, 특수 정련을 거쳐 검신이 붉은빛을 띠며, 독특한 액화 오리지늄을 적용한 아츠 유닛은 마치 용광로에서 흘러내린 피눈물 한 방울을 연상시킵니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_sword_0006","value":"어둠 · 울부짖는 불길"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/703f5b0563a10737f1a8a9ed2e3f9640.png",
+    description:
+      "주술 타임에서 제작한 날카로운 무기 중 하나, 특수 정련을 거쳐 검신이 붉은빛을 띠며, 독특한 액화 오리지늄을 적용한 아츠 유닛은 마치 용광로에서 흘러내린 피눈물 한 방울을 연상시킵니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_sword_0006", value: "어둠 · 울부짖는 불길" },
+    ],
   },
   "2df0f73357c4793b5342a269cb277a86": {
     weaponId: "2df0f73357c4793b5342a269cb277a86",
     name: "위대한 이름",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/709788390fc342f4963d999e99495109.png",
-    description: "미에슈코 공업에서 출시한 고품질 사브르, 탈로스 II 상업연합회 상류층 인사들 사이에서 큰 인기를 끌고 있습니다. 정교하게 다듬어진 외관만큼이나 그 성능 또한 믿을 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_phydam_high","value":"물리 피해 증가 · 대"},{"key":"sk_wpn_sword_0013","value":"잔혹 · 엄격한 규율"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/709788390fc342f4963d999e99495109.png",
+    description:
+      "미에슈코 공업에서 출시한 고품질 사브르, 탈로스 II 상업연합회 상류층 인사들 사이에서 큰 인기를 끌고 있습니다. 정교하게 다듬어진 외관만큼이나 그 성능 또한 믿을 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_phydam_high", value: "물리 피해 증가 · 대" },
+      { key: "sk_wpn_sword_0013", value: "잔혹 · 엄격한 규율" },
+    ],
   },
   "206398230aa76ff409dc4bf696dd0e4d": {
     weaponId: "206398230aa76ff409dc4bf696dd0e4d",
     name: "작품: 침식 흔적",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/df4567da6a3c786c4d00b50a4b5cd074.png",
-    description: "경량 초자연 기술 실험실에서 계약한 작품, 예술가가 직접 조각한 금속 부품과 빙력암의 무늬가 결합해 독특한 아츠 회로를 형성합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_naturaldam_high","value":"자연 피해 증가 · 대"},{"key":"sk_wpn_funnel_0006","value":"억제 · 빙퇴석의 침식 흔적"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/df4567da6a3c786c4d00b50a4b5cd074.png",
+    description:
+      "경량 초자연 기술 실험실에서 계약한 작품, 예술가가 직접 조각한 금속 부품과 빙력암의 무늬가 결합해 독특한 아츠 회로를 형성합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_naturaldam_high", value: "자연 피해 증가 · 대" },
+      { key: "sk_wpn_funnel_0006", value: "억제 · 빙퇴석의 침식 흔적" },
+    ],
   },
-  "c9713c1d4deeb6352eabfbb38dff0961": {
+  c9713c1d4deeb6352eabfbb38dff0961: {
     weaponId: "c9713c1d4deeb6352eabfbb38dff0961",
     name: "장대한 염원",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/22cd7d47a45fd012e7a7db575cce0e3c.png",
-    description: "엔드필드 공업에서 제작한 고급 무기, 실험용 오리지늄 소재를 검신 주재료로, 창의적으로 활용하여 뛰어난 에너지 전도 성능을 갖췄습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_high","value":"민첩 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_sword_0021","value":"고통 · 간절한 소망"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/22cd7d47a45fd012e7a7db575cce0e3c.png",
+    description:
+      "엔드필드 공업에서 제작한 고급 무기, 실험용 오리지늄 소재를 검신 주재료로, 창의적으로 활용하여 뛰어난 에너지 전도 성능을 갖췄습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_high", value: "민첩 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_sword_0021", value: "고통 · 간절한 소망" },
+    ],
   },
   "8c92c8afba87482f3fb0d918bd44167b": {
     weaponId: "8c92c8afba87482f3fb0d918bd44167b",
     name: "천둥의 흔적",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/966047478f2494b19a09baf6338b5e04.png",
-    description: "엔드필드 공업에서 제작한 특별 장비 중 하나, 화염 모양의 검과 교차식 오리지늄 회로가 결합해 기질의 효율을 증가시킵니다. 탈로스 현상을 관측한 데서 영감받았다고 합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_high","value":"힘 증가 · 대"},{"key":"wpn_sp_attr_hp_high","value":"생명력 증가 · 대"},{"key":"sk_wpn_claym_0007","value":"의료 · 탈로스의 눈"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/966047478f2494b19a09baf6338b5e04.png",
+    description:
+      "엔드필드 공업에서 제작한 특별 장비 중 하나, 화염 모양의 검과 교차식 오리지늄 회로가 결합해 기질의 효율을 증가시킵니다. 탈로스 현상을 관측한 데서 영감받았다고 합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_high", value: "힘 증가 · 대" },
+      { key: "wpn_sp_attr_hp_high", value: "생명력 증가 · 대" },
+      { key: "sk_wpn_claym_0007", value: "의료 · 탈로스의 눈" },
+    ],
   },
   "554ebf0c7a815506538b20bf01f3c279": {
     weaponId: "554ebf0c7a815506538b20bf01f3c279",
     name: "클래니벌",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/08e0bd5f24cd5d5d3a7bec866165fe0a.png",
-    description: "레이시언 공업에서 제작한 특수 총기, 사용 난도가 매우 높습니다. 실험용 무기이기 때문에, 시장에는 소량의 표본만 풀렸습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_magicdam_high","value":"아츠 피해 증가 · 대"},{"key":"sk_wpn_pistol_0009","value":"고통 · 가차 없는 숙청"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/08e0bd5f24cd5d5d3a7bec866165fe0a.png",
+    description:
+      "레이시언 공업에서 제작한 특수 총기, 사용 난도가 매우 높습니다. 실험용 무기이기 때문에, 시장에는 소량의 표본만 풀렸습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      { key: "wpn_sp_attr_magicdam_high", value: "아츠 피해 증가 · 대" },
+      { key: "sk_wpn_pistol_0009", value: "고통 · 가차 없는 숙청" },
+    ],
   },
   "9ebcdee862c8f6293f45d4f0458c5244": {
     weaponId: "9ebcdee862c8f6293f45d4f0458c5244",
     name: "테르밋 커터",
     rarity: 6,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/c938f2a07f6fbd4af04c04fabf2001e0.png",
-    description: "노스마치 중공업 지원소 '개척자' 시리즈의 기본 제품, 4형 테르밋 커터는 특허받은 고온 소재를 사용하여 강력한 절단 성능을 자랑하며, 많은 공학자에게 호평받고 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_high","value":"의지 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_sword_0012","value":"흐름 · 고열 방출"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/c938f2a07f6fbd4af04c04fabf2001e0.png",
+    description:
+      "노스마치 중공업 지원소 '개척자' 시리즈의 기본 제품, 4형 테르밋 커터는 특허받은 고온 소재를 사용하여 강력한 절단 성능을 자랑하며, 많은 공학자에게 호평받고 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_high", value: "의지 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_sword_0012", value: "흐름 · 고열 방출" },
+    ],
   },
-  "b4a90aaea26844d605b88a8eca3d9f85": {
+  b4a90aaea26844d605b88a8eca3d9f85: {
     weaponId: "b4a90aaea26844d605b88a8eca3d9f85",
     name: "폭발 유닛",
     rarity: 6,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/27335fd9a9e8c41c3cc063fbf8481f9b.png",
-    description: "노스마치 중공업 지원소에서 개발한 아츠 유닛, 논란의 여지 없이 최고의 오리지늄 아츠 전도성을 자랑합니다. 오직 가장 강인한 사용자만이 이 제품을 다룰 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_high","value":"주요 능력치 증가 · 대"},{"key":"wpn_sp_attr_phy_spell_high","value":"오리지늄 아츠 강도 증가 · 대"},{"key":"sk_wpn_funnel_0008","value":"방출 · 우승자의 위세"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/27335fd9a9e8c41c3cc063fbf8481f9b.png",
+    description:
+      "노스마치 중공업 지원소에서 개발한 아츠 유닛, 논란의 여지 없이 최고의 오리지늄 아츠 전도성을 자랑합니다. 오직 가장 강인한 사용자만이 이 제품을 다룰 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_high", value: "주요 능력치 증가 · 대" },
+      {
+        key: "wpn_sp_attr_phy_spell_high",
+        value: "오리지늄 아츠 강도 증가 · 대",
+      },
+      { key: "sk_wpn_funnel_0008", value: "방출 · 우승자의 위세" },
+    ],
   },
   "02189f8c94d87b592a9b64a73ddd0e4b": {
     weaponId: "02189f8c94d87b592a9b64a73ddd0e4b",
     name: "항로의 개척자",
     rarity: 6,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/716576091b11bd43a26bc8f06f3606b9.png",
-    description: "미에슈코 공업의 올해의 콘셉트 신작품, 우리를 탈로스 II의 끝없는 여정으로 이끈 항로의 개척자들에게 경의를 표합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_high","value":"지능 증가 · 대"},{"key":"wpn_sp_attr_crystdam_high","value":"냉기 피해 증가 · 대"},{"key":"sk_wpn_pistol_0005","value":"고통 · 외로운 항해"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/716576091b11bd43a26bc8f06f3606b9.png",
+    description:
+      "미에슈코 공업의 올해의 콘셉트 신작품, 우리를 탈로스 II의 끝없는 여정으로 이끈 항로의 개척자들에게 경의를 표합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_high", value: "지능 증가 · 대" },
+      { key: "wpn_sp_attr_crystdam_high", value: "냉기 피해 증가 · 대" },
+      { key: "sk_wpn_pistol_0005", value: "고통 · 외로운 항해" },
+    ],
   },
   "042aba63b6335eb4df880e5fc4d24737": {
     weaponId: "042aba63b6335eb4df880e5fc4d24737",
     name: "헤라펜거",
     rarity: 6,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/3168da8af558e5b21dd259713e583740.png",
-    description: "주술 타임에서 출시한 기묘한 무기 중 하나, 칼날은 평범한 얼음으로 제작되었지만, 표면에 부착된 특수한 오리지늄 아츠로 인해 파괴되지 않습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_high","value":"힘 증가 · 대"},{"key":"wpn_sp_attr_atk_high","value":"공격력 증가 · 대"},{"key":"sk_wpn_claym_0013","value":"방출 · 사무치는 추위"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/3168da8af558e5b21dd259713e583740.png",
+    description:
+      "주술 타임에서 출시한 기묘한 무기 중 하나, 칼날은 평범한 얼음으로 제작되었지만, 표면에 부착된 특수한 오리지늄 아츠로 인해 파괴되지 않습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_high", value: "힘 증가 · 대" },
+      { key: "wpn_sp_attr_atk_high", value: "공격력 증가 · 대" },
+      { key: "sk_wpn_claym_0013", value: "방출 · 사무치는 추위" },
+    ],
   },
-  "f0b1e7a2328545796cc0c2f7059bb814": {
+  f0b1e7a2328545796cc0c2f7059bb814: {
     weaponId: "f0b1e7a2328545796cc0c2f7059bb814",
     name: "O.B.J. 벨로시투스",
     rarity: 5,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/6a014479e5cd1d7d29e63b3a2287331f.png",
-    description: "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 경량 소재를 사용했으나 견고하고 내구성이 뛰어납니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_usgs_mid","value":"궁극기 충전 효율 증가 · 중"},{"key":"sk_wpn_pistol_0012","value":"방출 · 신속한 일격"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/6a014479e5cd1d7d29e63b3a2287331f.png",
+    description:
+      "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 경량 소재를 사용했으나 견고하고 내구성이 뛰어납니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_usgs_mid", value: "궁극기 충전 효율 증가 · 중" },
+      { key: "sk_wpn_pistol_0012", value: "방출 · 신속한 일격" },
+    ],
   },
-  "e095766c36d7e1333d92022e32bdc51f": {
+  e095766c36d7e1333d92022e32bdc51f: {
     weaponId: "e095766c36d7e1333d92022e32bdc51f",
     name: "O.B.J. 스파이크",
     rarity: 5,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/1eb9f2fd6e269da49a919242dfd998cf.png",
-    description: "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 사용자가 창끝 부품을 자유롭게 조정할 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_mid","value":"의지 증가 · 중"},{"key":"wpn_sp_attr_phydam_mid","value":"물리 피해 증가 · 중"},{"key":"sk_wpn_lance_0013","value":"고통 · 빙산을 넘어서"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/1eb9f2fd6e269da49a919242dfd998cf.png",
+    description:
+      "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 사용자가 창끝 부품을 자유롭게 조정할 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_mid", value: "의지 증가 · 중" },
+      { key: "wpn_sp_attr_phydam_mid", value: "물리 피해 증가 · 중" },
+      { key: "sk_wpn_lance_0013", value: "고통 · 빙산을 넘어서" },
+    ],
   },
   "3eb6c675b1cc34f15a51ac91a3271eb2": {
     weaponId: "3eb6c675b1cc34f15a51ac91a3271eb2",
     name: "O.B.J. 아츠 아이덴티티",
     rarity: 5,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/4e6a0916ffce69061e342fb05164d971.png",
-    description: "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 출력은 사용자의 오리지늄 아츠 수준에 따라 달라집니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_mid","value":"지능 증가 · 중"},{"key":"wpn_sp_attr_phy_spell_mid","value":"오리지늄 아츠 강도 증가 · 중"},{"key":"sk_wpn_funnel_0014","value":"추격 · 아츠 승화"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/4e6a0916ffce69061e342fb05164d971.png",
+    description:
+      "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 출력은 사용자의 오리지늄 아츠 수준에 따라 달라집니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_mid", value: "지능 증가 · 중" },
+      {
+        key: "wpn_sp_attr_phy_spell_mid",
+        value: "오리지늄 아츠 강도 증가 · 중",
+      },
+      { key: "sk_wpn_funnel_0014", value: "추격 · 아츠 승화" },
+    ],
   },
   "0db581027783e76ea934a59de8e93c6d": {
     weaponId: "0db581027783e76ea934a59de8e93c6d",
     name: "O.B.J. 엣지 오브 라이트",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/6a8d9f9d45e74fba903ddd0988d10f58.png",
-    description: "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 구성한 프로토타입 기획팀의 설계작. 검 손잡이에 탈착할 수 있는 보조 부품이 장착되어 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_atk_mid","value":"공격력 증가 · 중"},{"key":"sk_wpn_sword_0019","value":"흐름 · 거침없는 예리함"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/6a8d9f9d45e74fba903ddd0988d10f58.png",
+    description:
+      "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 구성한 프로토타입 기획팀의 설계작. 검 손잡이에 탈착할 수 있는 보조 부품이 장착되어 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_atk_mid", value: "공격력 증가 · 중" },
+      { key: "sk_wpn_sword_0019", value: "흐름 · 거침없는 예리함" },
+    ],
   },
   "8523a3816bdbee0e98378020a3fcc050": {
     weaponId: "8523a3816bdbee0e98378020a3fcc050",
     name: "O.B.J. 헤비 버든",
     rarity: 5,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/8dedfce89ca312ce5b38c81df1744857.png",
-    description: "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 실전 상황에 맞춰 다양한 모듈 키트를 장착할 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_hp_mid","value":"생명력 증가 · 중"},{"key":"sk_wpn_claym_0015","value":"효율 · 강인한 의지"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/8dedfce89ca312ce5b38c81df1744857.png",
+    description:
+      "엔드필드 공업에서 제작한 제식 장비 시리즈, 베테랑 무기고 공학자 오페로가 이끄는 프로토타입 기획팀이 설계했습니다. 실전 상황에 맞춰 다양한 모듈 키트를 장착할 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_hp_mid", value: "생명력 증가 · 중" },
+      { key: "sk_wpn_claym_0015", value: "효율 · 강인한 의지" },
+    ],
   },
   "70ad85b123f1e2951d0ccaa9cc91a74d": {
     weaponId: "70ad85b123f1e2951d0ccaa9cc91a74d",
     name: "강철의 여운",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/b78d6567010acaea597aa7cc75980909.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 고급 장비 중 하나, 손잡이와 보호 장갑이 일체형으로 설계되었으며, 응력 충전 메커니즘이 운동 에너지를 충전하여 무기의 살상력을 높입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_phydam_mid","value":"물리 피해 증가 · 중"},{"key":"sk_wpn_sword_0005","value":"기예 · 옛 불의 잔향"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/b78d6567010acaea597aa7cc75980909.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 고급 장비 중 하나, 손잡이와 보호 장갑이 일체형으로 설계되었으며, 응력 충전 메커니즘이 운동 에너지를 충전하여 무기의 살상력을 높입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_phydam_mid", value: "물리 피해 증가 · 중" },
+      { key: "sk_wpn_sword_0005", value: "기예 · 옛 불의 잔향" },
+    ],
   },
   "70a3e5bec50c830be1ea0e08c7d8139e": {
     weaponId: "70a3e5bec50c830be1ea0e08c7d8139e",
     name: "검은 추적자",
     rarity: 5,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/850b76cf6d0a41b4fe9ce9e1c24a2dd3.png",
-    description: "홍산 선검국에서 개발한 제식 대검, 검신에 신형 특수 코팅을 적용해 뛰어난 방호 성능을 자랑하며, 극한의 악조건에서도 영향받지 않습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_usgs_mid","value":"궁극기 충전 효율 증가 · 중"},{"key":"sk_wpn_claym_0011","value":"방출 · 꿰뚫는 이치"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/850b76cf6d0a41b4fe9ce9e1c24a2dd3.png",
+    description:
+      "홍산 선검국에서 개발한 제식 대검, 검신에 신형 특수 코팅을 적용해 뛰어난 방호 성능을 자랑하며, 극한의 악조건에서도 영향받지 않습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_usgs_mid", value: "궁극기 충전 효율 증가 · 중" },
+      { key: "sk_wpn_claym_0011", value: "방출 · 꿰뚫는 이치" },
+    ],
   },
-  "bcbbdc567a6669180d8fb3f04b2764f0": {
+  bcbbdc567a6669180d8fb3f04b2764f0: {
     weaponId: "bcbbdc567a6669180d8fb3f04b2764f0",
     name: "고대의 강줄기",
     rarity: 5,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/6c381086fe83a0b12abcbce91d3c1f33.png",
-    description: "홍산 선검국에서 제작한 고급 대검, 동급 제품보다 가벼우면서 살상력은 조금도 떨어지지 않습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_phy_spell_mid","value":"오리지늄 아츠 강도 증가 · 중"},{"key":"sk_wpn_claym_0014","value":"잔혹 · 천추의 대지"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/6c381086fe83a0b12abcbce91d3c1f33.png",
+    description:
+      "홍산 선검국에서 제작한 고급 대검, 동급 제품보다 가벼우면서 살상력은 조금도 떨어지지 않습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      {
+        key: "wpn_sp_attr_phy_spell_mid",
+        value: "오리지늄 아츠 강도 증가 · 중",
+      },
+      { key: "sk_wpn_claym_0014", value: "잔혹 · 천추의 대지" },
+    ],
   },
-  "db139a2c484555ad2fd7195d6e26bdfe": {
+  db139a2c484555ad2fd7195d6e26bdfe: {
     weaponId: "db139a2c484555ad2fd7195d6e26bdfe",
     name: "린수를 찾아서 3.0",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/4ca0803c9523d38cbccf42c11c364d4b.png",
-    description: "노스마치 중공업 지원소 '아웃도어 익스플로러' 시리즈의 주력 제품, 자연 친화적 설계 이념과 뛰어난 휴대성으로 많은 탐험가와 린수 사냥 마니아들에게 극찬받고 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_crystdam_mid","value":"냉기 피해 증가 · 중"},{"key":"sk_wpn_sword_0020","value":"억제 · 린수를 향한 의지"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/4ca0803c9523d38cbccf42c11c364d4b.png",
+    description:
+      "노스마치 중공업 지원소 '아웃도어 익스플로러' 시리즈의 주력 제품, 자연 친화적 설계 이념과 뛰어난 휴대성으로 많은 탐험가와 린수 사냥 마니아들에게 극찬받고 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_crystdam_mid", value: "냉기 피해 증가 · 중" },
+      { key: "sk_wpn_sword_0020", value: "억제 · 린수를 향한 의지" },
+    ],
   },
   "95fbd3b55a30e5c185a5aaa52d3c53b9": {
     weaponId: "95fbd3b55a30e5c185a5aaa52d3c53b9",
     name: "망자의 노래",
     rarity: 5,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/bfbda14b0634b1ef9df15040f2e12640.png",
-    description: "주술 타임에서 출시한 기묘한 아츠 유닛 중 하나, 오리지늄 아츠의 범용성을 일부러 제한하여 고대 티카즈 주술의 어두운 논리를 부각했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_mid","value":"지능 증가 · 중"},{"key":"wpn_sp_attr_atk_mid","value":"공격력 증가 · 중"},{"key":"sk_wpn_funnel_0005","value":"어둠 · 무덤 위의 불씨"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/bfbda14b0634b1ef9df15040f2e12640.png",
+    description:
+      "주술 타임에서 출시한 기묘한 아츠 유닛 중 하나, 오리지늄 아츠의 범용성을 일부러 제한하여 고대 티카즈 주술의 어두운 논리를 부각했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_mid", value: "지능 증가 · 중" },
+      { key: "wpn_sp_attr_atk_mid", value: "공격력 증가 · 중" },
+      { key: "sk_wpn_funnel_0005", value: "어둠 · 무덤 위의 불씨" },
+    ],
   },
   "1f6cb3f00ad85bebf25cc6e8474e54b9": {
     weaponId: "1f6cb3f00ad85bebf25cc6e8474e54b9",
     name: "무가내하",
     rarity: 5,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/928c6949f9b56b3c4dca7fa145d740bc.png",
-    description: "홍산 선검국에서 개발한 아츠 유닛, 희귀한 식양 재료를 사용했으며, 재료 특성상 사용자는 매우 정밀한 조작 능력을 갖춰야 합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_mid","value":"의지 증가 · 중"},{"key":"wpn_sp_attr_usgs_mid","value":"궁극기 충전 효율 증가 · 중"},{"key":"sk_wpn_funnel_0007","value":"사기 · 순묘 분석법"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/928c6949f9b56b3c4dca7fa145d740bc.png",
+    description:
+      "홍산 선검국에서 개발한 아츠 유닛, 희귀한 식양 재료를 사용했으며, 재료 특성상 사용자는 매우 정밀한 조작 능력을 갖춰야 합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_mid", value: "의지 증가 · 중" },
+      { key: "wpn_sp_attr_usgs_mid", value: "궁극기 충전 효율 증가 · 중" },
+      { key: "sk_wpn_funnel_0007", value: "사기 · 순묘 분석법" },
+    ],
   },
-  "e17c0309213d793af7e3cdd44fc371d2": {
+  e17c0309213d793af7e3cdd44fc371d2: {
     weaponId: "e17c0309213d793af7e3cdd44fc371d2",
     name: "불사의 성주",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/c546904a4df9d036f07463d7843dcacd.png",
-    description: "용광로 요새에서 제작한 무기 중 하나, 구식 설계지만 견고하고 내구성이 뛰어나며, 묵직한 검신은 전선이 이동할 때마다 동토에 깊은 흔적을 남깁니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_mid","value":"지능 증가 · 중"},{"key":"wpn_sp_attr_usgs_mid","value":"궁극기 충전 효율 증가 · 중"},{"key":"sk_wpn_sword_0007","value":"사기 · 잔성의 귀로"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/c546904a4df9d036f07463d7843dcacd.png",
+    description:
+      "용광로 요새에서 제작한 무기 중 하나, 구식 설계지만 견고하고 내구성이 뛰어나며, 묵직한 검신은 전선이 이동할 때마다 동토에 깊은 흔적을 남깁니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_mid", value: "지능 증가 · 중" },
+      { key: "wpn_sp_attr_usgs_mid", value: "궁극기 충전 효율 증가 · 중" },
+      { key: "sk_wpn_sword_0007", value: "사기 · 잔성의 귀로" },
+    ],
   },
-  "bbf6347d2ffc05b093f5bfeb55cf2c7e": {
+  bbf6347d2ffc05b093f5bfeb55cf2c7e: {
     weaponId: "bbf6347d2ffc05b093f5bfeb55cf2c7e",
     name: "선교의 자유",
     rarity: 5,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/a79544ce71c336b2630bda55d8616c55.png",
-    description: "미에슈코 공업에서 고요한 수도회를 위해 맞춤 제작한 아츠 유닛, 이 제품은 설계와 검증부터 생산과 조정까지 모든 과정을 고요한 수도회 수사가 감수했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_mid","value":"의지 증가 · 중"},{"key":"wpn_sp_attr_heal_mid","value":"치유 효율 증가 · 중"},{"key":"sk_wpn_funnel_0012","value":"의료 · 신앙의 구원"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/a79544ce71c336b2630bda55d8616c55.png",
+    description:
+      "미에슈코 공업에서 고요한 수도회를 위해 맞춤 제작한 아츠 유닛, 이 제품은 설계와 검증부터 생산과 조정까지 모든 과정을 고요한 수도회 수사가 감수했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_mid", value: "의지 증가 · 중" },
+      { key: "wpn_sp_attr_heal_mid", value: "치유 효율 증가 · 중" },
+      { key: "sk_wpn_funnel_0012", value: "의료 · 신앙의 구원" },
+    ],
   },
-  "fdfe839292c5cd09cf004e2b46a51d64": {
+  fdfe839292c5cd09cf004e2b46a51d64: {
     weaponId: "fdfe839292c5cd09cf004e2b46a51d64",
     name: "숭배의 시선",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/5f7c2f707e5fd2d812e865e0bccc1852.png",
-    description: "홍산 선검국에서 출시한 고급 무기, 전 제품군 중에서도 특히 인기가 높아, 황무지에서조차 수많은 모조품이 유통될 정도입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_phydam_mid","value":"물리 피해 증가 · 중"},{"key":"sk_wpn_sword_0015","value":"어둠 · 우러러보는 경지"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/5f7c2f707e5fd2d812e865e0bccc1852.png",
+    description:
+      "홍산 선검국에서 출시한 고급 무기, 전 제품군 중에서도 특히 인기가 높아, 황무지에서조차 수많은 모조품이 유통될 정도입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_phydam_mid", value: "물리 피해 증가 · 중" },
+      { key: "sk_wpn_sword_0015", value: "어둠 · 우러러보는 경지" },
+    ],
   },
-  "bcb166bc49feaae0696feebb07e78151": {
+  bcb166bc49feaae0696feebb07e78151: {
     weaponId: "bcb166bc49feaae0696feebb07e78151",
     name: "십이문",
     rarity: 5,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/808baca4b6c6dbdf4276db425e140705.png",
-    description: "황무지에서 제작된 날카로운 장검, 무기 장인마다 장식을 두르는 방식이 제각각인 부분이 인상적입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_atk_mid","value":"공격력 증가 · 중"},{"key":"sk_wpn_sword_0018","value":"고통 · 파고드는 추궁"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/808baca4b6c6dbdf4276db425e140705.png",
+    description:
+      "황무지에서 제작된 날카로운 장검, 무기 장인마다 장식을 두르는 방식이 제각각인 부분이 인상적입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_atk_mid", value: "공격력 증가 · 중" },
+      { key: "sk_wpn_sword_0018", value: "고통 · 파고드는 추궁" },
+    ],
   },
   "7206719906e32db051ed6cba0bb0e8c3": {
     weaponId: "7206719906e32db051ed6cba0bb0e8c3",
     name: "이성적인 작별",
     rarity: 5,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/cee67efec0389c4a0197291c3550ace7.png",
-    description: "레이시언 공업에서 인류의 외부 탐색을 지원하기 위해 설계 생산한 고에너지형 총기. 환경 적응 능력이 뛰어나 대부분 탐험가의 표준 무기로 사용됩니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_firedam_mid","value":"열기 피해 증가 · 중"},{"key":"sk_wpn_pistol_0004","value":"추격 · 옛 시절의 원조"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/cee67efec0389c4a0197291c3550ace7.png",
+    description:
+      "레이시언 공업에서 인류의 외부 탐색을 지원하기 위해 설계 생산한 고에너지형 총기. 환경 적응 능력이 뛰어나 대부분 탐험가의 표준 무기로 사용됩니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_firedam_mid", value: "열기 피해 증가 · 중" },
+      { key: "sk_wpn_pistol_0004", value: "추격 · 옛 시절의 원조" },
+    ],
   },
   "77eaad93c9cbca0b93eb751096f25249": {
     weaponId: "77eaad93c9cbca0b93eb751096f25249",
     name: "작품: 중생",
     rarity: 5,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/be01d8ca6d934553911d2823592bb07e.png",
-    description: "경량 초자연 기술 실험실에서 의뢰받고 맞춤 제작한 작품, 예술가가 대담하게 유적 잔해로 총신을 감쌌으며, 그 위에 특수한 문양을 새겨 넣었습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_mid","value":"민첩 증가 · 중"},{"key":"wpn_sp_attr_magicdam_mid","value":"아츠 피해 증가 · 중"},{"key":"sk_wpn_pistol_0006","value":"고통 · 중생의 귀로"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/be01d8ca6d934553911d2823592bb07e.png",
+    description:
+      "경량 초자연 기술 실험실에서 의뢰받고 맞춤 제작한 작품, 예술가가 대담하게 유적 잔해로 총신을 감쌌으며, 그 위에 특수한 문양을 새겨 넣었습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_mid", value: "민첩 증가 · 중" },
+      { key: "wpn_sp_attr_magicdam_mid", value: "아츠 피해 증가 · 중" },
+      { key: "sk_wpn_pistol_0006", value: "고통 · 중생의 귀로" },
+    ],
   },
-  "f7f39b12b903768c1ae9f93ee53bdf31": {
+  f7f39b12b903768c1ae9f93ee53bdf31: {
     weaponId: "f7f39b12b903768c1ae9f93ee53bdf31",
     name: "중심력",
     rarity: 5,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/16f96ef6f7f3f4314281d605dcd88743.png",
-    description: "레이시언 공업 맞춤형 제품 라인의 대표 모델, 군용 장창 형태를 기반으로 다양한 특수 기능과 개성 있는 디자인을 더했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_mid","value":"의지 증가 · 중"},{"key":"wpn_sp_attr_electrondam_mid","value":"전기 피해 증가 · 중"},{"key":"sk_wpn_lance_0006","value":"억제 · 동심원"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/16f96ef6f7f3f4314281d605dcd88743.png",
+    description:
+      "레이시언 공업 맞춤형 제품 라인의 대표 모델, 군용 장창 형태를 기반으로 다양한 특수 기능과 개성 있는 디자인을 더했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_mid", value: "의지 증가 · 중" },
+      { key: "wpn_sp_attr_electrondam_mid", value: "전기 피해 증가 · 중" },
+      { key: "sk_wpn_lance_0006", value: "억제 · 동심원" },
+    ],
   },
   "94e1b2da1900c1dcab313abf4c3ff144": {
     weaponId: "94e1b2da1900c1dcab313abf4c3ff144",
     name: "최후의 메아리",
     rarity: 5,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/19f31f1c6464ea63c4012f70c813ab8e.png",
-    description: "미에슈코 공업에서 소규모로 생산한 특별 제품, 미에슈코 공업과 기사 스포츠 전문가인 크런웰이 협력해서 만든 시리즈의 마지막 작품입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_hp_mid","value":"생명력 증가 · 중"},{"key":"sk_wpn_claym_0012","value":"의료 · 기사의 영광"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/19f31f1c6464ea63c4012f70c813ab8e.png",
+    description:
+      "미에슈코 공업에서 소규모로 생산한 특별 제품, 미에슈코 공업과 기사 스포츠 전문가인 크런웰이 협력해서 만든 시리즈의 마지막 작품입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_hp_mid", value: "생명력 증가 · 중" },
+      { key: "sk_wpn_claym_0012", value: "의료 · 기사의 영광" },
+    ],
   },
-  "c42d7a5b14ed540ab7ad51aabce58c23": {
+  c42d7a5b14ed540ab7ad51aabce58c23: {
     weaponId: "c42d7a5b14ed540ab7ad51aabce58c23",
     name: "키메라의 정의",
     rarity: 5,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/4f2cb32ac5a17bedf5e02a2a8cf192e2.png",
-    description: "엔드필드 공업에서 설계한 실험형 장창, 실제 생산량은 적으며, 복잡하고 변화무쌍한 전장에 대응하기 위해 분해와 조립이 쉬운 모듈화 설계를 채택했습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_mid","value":"힘 증가 · 중"},{"key":"wpn_sp_attr_usgs_mid","value":"궁극기 충전 효율 증가 · 중"},{"key":"sk_wpn_lance_0004","value":"잔혹 · 분노의 융합"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/4f2cb32ac5a17bedf5e02a2a8cf192e2.png",
+    description:
+      "엔드필드 공업에서 설계한 실험형 장창, 실제 생산량은 적으며, 복잡하고 변화무쌍한 전장에 대응하기 위해 분해와 조립이 쉬운 모듈화 설계를 채택했습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_mid", value: "힘 증가 · 중" },
+      { key: "wpn_sp_attr_usgs_mid", value: "궁극기 충전 효율 증가 · 중" },
+      { key: "sk_wpn_lance_0004", value: "잔혹 · 분노의 융합" },
+    ],
   },
   "2b97ff8a90a560307bf2c94bfb27c94c": {
     weaponId: "2b97ff8a90a560307bf2c94bfb27c94c",
     name: "황무지의 방랑자",
     rarity: 5,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/6f0b60866522811225bdd0545e56c0ea.png",
-    description: "레이시언 공업이 개발한 아츠 유닛, 간결함과 경량화로 유명합니다. 재료 사용량이 일반적인 아츠 유닛의 절반에도 미치지 않습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_mid","value":"지능 증가 · 중"},{"key":"wpn_sp_attr_electrondam_mid","value":"전기 피해 증가 · 중"},{"key":"sk_wpn_funnel_0004","value":"고통 · 황무지 군집"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/6f0b60866522811225bdd0545e56c0ea.png",
+    description:
+      "레이시언 공업이 개발한 아츠 유닛, 간결함과 경량화로 유명합니다. 재료 사용량이 일반적인 아츠 유닛의 절반에도 미치지 않습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_mid", value: "지능 증가 · 중" },
+      { key: "wpn_sp_attr_electrondam_mid", value: "전기 피해 증가 · 중" },
+      { key: "sk_wpn_funnel_0004", value: "고통 · 황무지 군집" },
+    ],
   },
   "6e5bc7e0d57ac37559065cc82f53d8ff": {
     weaponId: "6e5bc7e0d57ac37559065cc82f53d8ff",
     name: "개척자의 이정표",
     rarity: 4,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/481df64b6d4db08d1dac89de3ac80035.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 간결한 디자인과 가벼운 무게, 뛰어난 균형감을 갖추고 있어 로도스 아일랜드 뱅가드 오퍼레이터의 제식 장창을 연상시킵니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_low","value":"민첩 증가 · 소"},{"key":"wpn_sp_attr_atk_low","value":"공격력 증가 · 소"},{"key":"sk_wpn_lance_0003","value":"사기 · 원정의 시작"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/481df64b6d4db08d1dac89de3ac80035.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 간결한 디자인과 가벼운 무게, 뛰어난 균형감을 갖추고 있어 로도스 아일랜드 뱅가드 오퍼레이터의 제식 장창을 연상시킵니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_low", value: "민첩 증가 · 소" },
+      { key: "wpn_sp_attr_atk_low", value: "공격력 증가 · 소" },
+      { key: "sk_wpn_lance_0003", value: "사기 · 원정의 시작" },
+    ],
   },
   "3317a144172918cd4eb563d82c183e75": {
     weaponId: "3317a144172918cd4eb563d82c183e75",
     name: "거대한 격랑",
     rarity: 4,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/930270f68e8e34ea760aac79d57091a5.png",
-    description: "미에슈코 공업의 중급 라인 제품 중 하나, 유행에 맞고 혁신적인 디자인과 놀라운 가성비로 탈로스 II 상업연합회에서 새로운 인기 패션 아이템으로 자리 잡았습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_low","value":"지능 증가 · 소"},{"key":"wpn_sp_attr_atk_low","value":"공격력 증가 · 소"},{"key":"sk_wpn_sword_0009","value":"추격 · 끝없는 순환"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/930270f68e8e34ea760aac79d57091a5.png",
+    description:
+      "미에슈코 공업의 중급 라인 제품 중 하나, 유행에 맞고 혁신적인 디자인과 놀라운 가성비로 탈로스 II 상업연합회에서 새로운 인기 패션 아이템으로 자리 잡았습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_low", value: "지능 증가 · 소" },
+      { key: "wpn_sp_attr_atk_low", value: "공격력 증가 · 소" },
+      { key: "sk_wpn_sword_0009", value: "추격 · 끝없는 순환" },
+    ],
   },
   "9fe7c7376ba7dfc1deee82a9f6a81839": {
     weaponId: "9fe7c7376ba7dfc1deee82a9f6a81839",
     name: "공업 0.1",
     rarity: 4,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/bd33e500aef990070cecd979fed50f37.png",
-    description: "개척 지역에서 흔히 볼 수 있는 무기 유형, 기본 설계의 기원은 추적하기 어렵습니다. 제조 공정이 복잡하지 않아 일반 공업 설비로도 생산할 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_low","value":"힘 증가 · 소"},{"key":"wpn_sp_attr_atk_low","value":"공격력 증가 · 소"},{"key":"sk_wpn_claym_0003","value":"억제 · 비상 부스트"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/bd33e500aef990070cecd979fed50f37.png",
+    description:
+      "개척 지역에서 흔히 볼 수 있는 무기 유형, 기본 설계의 기원은 추적하기 어렵습니다. 제조 공정이 복잡하지 않아 일반 공업 설비로도 생산할 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_low", value: "힘 증가 · 소" },
+      { key: "wpn_sp_attr_atk_low", value: "공격력 증가 · 소" },
+      { key: "sk_wpn_claym_0003", value: "억제 · 비상 부스트" },
+    ],
   },
   "06321449b030edf3d7b35647de06aad3": {
     weaponId: "06321449b030edf3d7b35647de06aad3",
     name: "끝없는 여정",
     rarity: 4,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/6c83fe8d10deb59fd6bf95db7f4f2ec0.png",
-    description: "용광로 요새에서 철의 서약군 일반 병사들을 위해 생산한 제식 총기, 단순한 구조와 높은 출력으로 인기가 높습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_str_low","value":"힘 증가 · 소"},{"key":"wpn_sp_attr_magicdam_low","value":"아츠 피해 증가 · 소"},{"key":"sk_wpn_pistol_0003","value":"추격 · 끝없는 순환"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/6c83fe8d10deb59fd6bf95db7f4f2ec0.png",
+    description:
+      "용광로 요새에서 철의 서약군 일반 병사들을 위해 생산한 제식 총기, 단순한 구조와 높은 출력으로 인기가 높습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_str_low", value: "힘 증가 · 소" },
+      { key: "wpn_sp_attr_magicdam_low", value: "아츠 피해 증가 · 소" },
+      { key: "sk_wpn_pistol_0003", value: "추격 · 끝없는 순환" },
+    ],
   },
   "65e1458975f4ababad8bd1ded748548e": {
     weaponId: "65e1458975f4ababad8bd1ded748548e",
     name: "드러난 칼날",
     rarity: 4,
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/4086f3fcad163f613b05437e2155f3a4.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 간결한 모듈화 구조로 가볍고 균형 잡힌 그립감을 제공하며, 검날의 내구성이 뛰어납니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_agi_low","value":"민첩 증가 · 소"},{"key":"wpn_sp_attr_phydam_low","value":"물리 피해 증가 · 소"},{"key":"sk_wpn_sword_0008","value":"억제 · 비상 부스트"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/4086f3fcad163f613b05437e2155f3a4.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 간결한 모듈화 구조로 가볍고 균형 잡힌 그립감을 제공하며, 검날의 내구성이 뛰어납니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_agi_low", value: "민첩 증가 · 소" },
+      { key: "wpn_sp_attr_phydam_low", value: "물리 피해 증가 · 소" },
+      { key: "sk_wpn_sword_0008", value: "억제 · 비상 부스트" },
+    ],
   },
-  "a39ffbb3cc99fca1bacb5ba4df28454a": {
+  a39ffbb3cc99fca1bacb5ba4df28454a: {
     weaponId: "a39ffbb3cc99fca1bacb5ba4df28454a",
     name: "불꽃의 시험",
     rarity: 4,
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/01e90e063b59cb5314cc30fc799a93ed.png",
-    description: "용광로 요새에서 제작한 제식 대검, 숙련자는 드물지만 다루기 쉬워 신병들의 입문용 무기로 꾸준히 선택받고 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_low","value":"의지 증가 · 소"},{"key":"wpn_sp_attr_hp_low","value":"생명력 증가 · 소"},{"key":"sk_wpn_claym_0009","value":"분쇄 · 훈련된 전사"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/01e90e063b59cb5314cc30fc799a93ed.png",
+    description:
+      "용광로 요새에서 제작한 제식 대검, 숙련자는 드물지만 다루기 쉬워 신병들의 입문용 무기로 꾸준히 선택받고 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_low", value: "의지 증가 · 소" },
+      { key: "wpn_sp_attr_hp_low", value: "생명력 증가 · 소" },
+      { key: "sk_wpn_claym_0009", value: "분쇄 · 훈련된 전사" },
+    ],
   },
   "9ded3030a865f308d814abeac16b54ec": {
     weaponId: "9ded3030a865f308d814abeac16b54ec",
     name: "섬광 번개",
     rarity: 4,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/147748fa861a575f32acfa6b2d9e5237.png",
-    description: "엔드필드 공업에서 제작한 아츠 유닛 중 하나, 과감한 구조와 강력한 전도성을 갖췄지만 다루기 어렵습니다. 많은 오퍼레이터가 이것을 능숙하게 다루는 것을 실력의 증표로 여깁니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_low","value":"의지 증가 · 소"},{"key":"wpn_sp_attr_atk_low","value":"공격력 증가 · 소"},{"key":"sk_wpn_funnel_0003","value":"억제 · 비상 부스트"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/147748fa861a575f32acfa6b2d9e5237.png",
+    description:
+      "엔드필드 공업에서 제작한 아츠 유닛 중 하나, 과감한 구조와 강력한 전도성을 갖췄지만 다루기 어렵습니다. 많은 오퍼레이터가 이것을 능숙하게 다루는 것을 실력의 증표로 여깁니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_low", value: "의지 증가 · 소" },
+      { key: "wpn_sp_attr_atk_low", value: "공격력 증가 · 소" },
+      { key: "sk_wpn_funnel_0003", value: "억제 · 비상 부스트" },
+    ],
   },
   "9e04d4ffec20c4ab01124d70d03de4f1": {
     weaponId: "9e04d4ffec20c4ab01124d70d03de4f1",
     name: "아겔로스 사냥꾼",
     rarity: 4,
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/432474406ecfb02687ea5d48ff4b8083.png",
-    description: "용광로 요새에서 철의 서약군 일반 병사들을 위해 생산한 제식 장창, 날카로움으로 유명하며, 아겔로스에 대항하기 위해 특별히 설계되었습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_will_low","value":"의지 증가 · 소"},{"key":"wpn_sp_attr_magicdam_low","value":"아츠 피해 증가 · 소"},{"key":"sk_wpn_lance_0008","value":"억제 · 비상 부스트"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/432474406ecfb02687ea5d48ff4b8083.png",
+    description:
+      "용광로 요새에서 철의 서약군 일반 병사들을 위해 생산한 제식 장창, 날카로움으로 유명하며, 아겔로스에 대항하기 위해 특별히 설계되었습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_will_low", value: "의지 증가 · 소" },
+      { key: "wpn_sp_attr_magicdam_low", value: "아츠 피해 증가 · 소" },
+      { key: "sk_wpn_lance_0008", value: "억제 · 비상 부스트" },
+    ],
   },
-  "ccc3b65a8207dc28230d79c3e6712dd6": {
+  ccc3b65a8207dc28230d79c3e6712dd6: {
     weaponId: "ccc3b65a8207dc28230d79c3e6712dd6",
     name: "오토 하이퍼노바",
     rarity: 4,
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/c533eabd7f484aac150edc3dbd048fe1.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 안드레의 설계를 채택하였으며, 아츠 술식을 사전에 저장했다가 긴급 상황에서 빠르게 아츠를 전개할 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_low","value":"지능 증가 · 소"},{"key":"wpn_sp_attr_magicdam_low","value":"아츠 피해 증가 · 소"},{"key":"sk_wpn_funnel_0001","value":"사기 · 원정의 시작"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/c533eabd7f484aac150edc3dbd048fe1.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 돌파 장비 중 하나, 안드레의 설계를 채택하였으며, 아츠 술식을 사전에 저장했다가 긴급 상황에서 빠르게 아츠를 전개할 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_low", value: "지능 증가 · 소" },
+      { key: "wpn_sp_attr_magicdam_low", value: "아츠 피해 증가 · 소" },
+      { key: "sk_wpn_funnel_0001", value: "사기 · 원정의 시작" },
+    ],
   },
   "26fcb2fc51763fe854487b11e6c77ab0": {
     weaponId: "26fcb2fc51763fe854487b11e6c77ab0",
     name: "하울링 가드",
     rarity: 4,
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/735b8a228cfd89e91eab5634213fd9c0.png",
-    description: "미에슈코 공업에서 출시한 중급 라인 제품 중 하나, 레트로 라테라노 구조와 현대 공업 디자인의 절묘한 조화가 돋보이며, 블루 메탈릭 마감이 독특한 미감을 선사합니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_wisd_low","value":"지능 증가 · 소"},{"key":"wpn_sp_attr_atk_low","value":"공격력 증가 · 소"},{"key":"sk_wpn_pistol_0002","value":"억제 · 비상 부스트"}],
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/735b8a228cfd89e91eab5634213fd9c0.png",
+    description:
+      "미에슈코 공업에서 출시한 중급 라인 제품 중 하나, 레트로 라테라노 구조와 현대 공업 디자인의 절묘한 조화가 돋보이며, 블루 메탈릭 마감이 독특한 미감을 선사합니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_wisd_low", value: "지능 증가 · 소" },
+      { key: "wpn_sp_attr_atk_low", value: "공격력 증가 · 소" },
+      { key: "sk_wpn_pistol_0002", value: "억제 · 비상 부스트" },
+    ],
   },
   "44e1128c37bf8156fc66f339f2480edc": {
     weaponId: "44e1128c37bf8156fc66f339f2480edc",
     name: "다호프 7",
     rarity: "unknown",
-    weaponType: "great_sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/405aa716336d0d399cde63f38096301e.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 다호프가 설계를 담당했습니다. 공략 임무에 특화된 장비입니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_low","value":"주요 능력치 증가 · 소"},{"key":"sk_wpn_claym_0010","value":"강공 · 무장 정비"}],
+    weaponType: "claymores",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/405aa716336d0d399cde63f38096301e.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 다호프가 설계를 담당했습니다. 공략 임무에 특화된 장비입니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_low", value: "주요 능력치 증가 · 소" },
+      { key: "sk_wpn_claym_0010", value: "강공 · 무장 정비" },
+    ],
   },
   "7aeb5b0e8bd8d49a1911280616f1fce3": {
     weaponId: "7aeb5b0e8bd8d49a1911280616f1fce3",
     name: "오페로 77",
     rarity: "unknown",
-    weaponType: "polearm",
-    iconUrl: "https://static.skport.com/image/common/20251129/84a37c54af2051047d3da560fb9b98f9.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 베테랑 무기고 공학자 오페로가 설계를 담당했습니다. 편안한 그립감 덕분에 신입 오퍼레이터도 쉽게 다룰 수 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_low","value":"주요 능력치 증가 · 소"},{"key":"sk_wpn_lance_0009","value":"강공 · 무장 정비"}],
+    weaponType: "lance",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/84a37c54af2051047d3da560fb9b98f9.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 베테랑 무기고 공학자 오페로가 설계를 담당했습니다. 편안한 그립감 덕분에 신입 오퍼레이터도 쉽게 다룰 수 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_low", value: "주요 능력치 증가 · 소" },
+      { key: "sk_wpn_lance_0009", value: "강공 · 무장 정비" },
+    ],
   },
   "60c1b5283a0d13ef7000797687656f0d": {
     weaponId: "60c1b5283a0d13ef7000797687656f0d",
     name: "지미니 12",
     rarity: "unknown",
-    weaponType: "arts_unit",
-    iconUrl: "https://static.skport.com/image/common/20251129/74de5c6676451d5c7126ba84f87b0718.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 지미니가 설계를 담당했습니다. 이 아츠 유닛은 신입 오퍼레이터들 사이에 특히 인기가 많습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_low","value":"주요 능력치 증가 · 소"},{"key":"sk_wpn_funnel_0002","value":"강공 · 무장 정비"}],
+    weaponType: "wand",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/74de5c6676451d5c7126ba84f87b0718.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 지미니가 설계를 담당했습니다. 이 아츠 유닛은 신입 오퍼레이터들 사이에 특히 인기가 많습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_low", value: "주요 능력치 증가 · 소" },
+      { key: "sk_wpn_funnel_0002", value: "강공 · 무장 정비" },
+    ],
   },
   "43cfa19fb2698d35514f5476a2010df3": {
     weaponId: "43cfa19fb2698d35514f5476a2010df3",
     name: "타르 11",
     rarity: "unknown",
     weaponType: "sword",
-    iconUrl: "https://static.skport.com/image/common/20251129/397d215b08df02e77309f693971a25bf.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 타르가 설계를 담당했습니다. 많은 외근 오퍼레이터가 처음으로 사용하는 무기로 알려져 있습니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_low","value":"주요 능력치 증가 · 소"},{"key":"sk_wpn_sword_0003","value":"강공 · 무장 정비"}],
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/397d215b08df02e77309f693971a25bf.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 타르가 설계를 담당했습니다. 많은 외근 오퍼레이터가 처음으로 사용하는 무기로 알려져 있습니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_low", value: "주요 능력치 증가 · 소" },
+      { key: "sk_wpn_sword_0003", value: "강공 · 무장 정비" },
+    ],
   },
   "3985d7772255bd30802f9342d8cc9f48": {
     weaponId: "3985d7772255bd30802f9342d8cc9f48",
     name: "페코 5",
     rarity: "unknown",
-    weaponType: "handcannon",
-    iconUrl: "https://static.skport.com/image/common/20251129/a774ee68210d6c5c2091e8249b093ba0.png",
-    description: "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 페코가 설계를 담당했습니다. 이제 식각 탄환과 총기는 더 이상 산크타만의 전유물이 아닙니다.",
-    functionText: "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
-    skills: [{"key":"wpn_attr_main_low","value":"주요 능력치 증가 · 소"},{"key":"sk_wpn_pistol_0001","value":"강공 · 무장 정비"}],
-  }
+    weaponType: "pistol",
+    iconUrl:
+      "https://static.skport.com/image/common/20251129/a774ee68210d6c5c2091e8249b093ba0.png",
+    description:
+      "엔드필드 공업에서 제작한 오퍼레이터 기본 장비 중 하나, 무기고 공학자 페코가 설계를 담당했습니다. 이제 식각 탄환과 총기는 더 이상 산크타만의 전유물이 아닙니다.",
+    functionText:
+      "엔드필드 오퍼레이터용 무기, 장착 시 오퍼레이터의 작전 능력이 크게 증가합니다.",
+    skills: [
+      { key: "wpn_attr_main_low", value: "주요 능력치 증가 · 소" },
+      { key: "sk_wpn_pistol_0001", value: "강공 · 무장 정비" },
+    ],
+  },
 };
 
 export const WEAPON_MAP: Record<string, string> = Object.fromEntries(
@@ -774,9 +1281,9 @@ export const WEAPON_RARITY_LABEL: Record<WeaponRarity, string> = {
 
 export const WEAPON_TYPE_LABEL: Record<WeaponType, string> = {
   sword: "한손검",
-  great_sword: "양손검",
-  polearm: "장병기",
-  handcannon: "권총",
-  arts_unit: "아츠 유닛",
+  claymores: "양손검",
+  lance: "장병기",
+  pistol: "권총",
+  wand: "아츠 유닛",
   unknown: "미분류",
 };

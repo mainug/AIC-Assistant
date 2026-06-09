@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../api/config";
 import {
-  CHARACTER_CLASS_LABEL,
+  CHARACTER_PROFESSION_LABEL,
   CHARACTER_ELEMENT_LABEL,
   CHARACTER_PLACEHOLDER_IMAGE,
   CHARACTER_RARITY_LABEL,
@@ -171,7 +171,7 @@ function EndfieldCharacterStatisticsDetailPage() {
               />
               <MetaItem
                 label="직업군"
-                value={CHARACTER_CLASS_LABEL[meta.classType]}
+                value={CHARACTER_PROFESSION_LABEL[meta.profession]}
               />
               <MetaItem
                 label="사용 무기"

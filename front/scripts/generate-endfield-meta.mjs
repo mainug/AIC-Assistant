@@ -10,6 +10,8 @@ const charsRaw = JSON.parse(fs.readFileSync(CHAR_RAW_PATH, "utf-8"));
 const weaponsRaw = JSON.parse(fs.readFileSync(WEAPON_RAW_PATH, "utf-8"));
 
 const chars = charsRaw.data?.chars ?? [];
+const elementKeys = [...new Set(chars.map((char) => char.property?.key))];
+console.log("element keys:", elementKeys);
 const weapons = weaponsRaw.data?.weapons ?? [];
 
 const q = (value) => JSON.stringify(value ?? "");
@@ -19,19 +21,19 @@ const mapElement = (key) => {
     case "char_property_physical":
       return "physical";
     case "char_property_cryst":
-      return "cryo";
+      return "cryst";
     case "char_property_fire":
-      return "heat";
+      return "fire";
     case "char_property_natural":
-      return "nature";
-    case "char_property_electric":
-      return "electric";
+      return "natural";
+    case "char_property_pulse":
+      return "pulse";
     default:
       return "unknown";
   }
 };
 
-const mapClassType = (key) => {
+const mapProfession = (key) => {
   switch (key) {
     case "profession_vanguard":
       return "vanguard";
@@ -44,7 +46,7 @@ const mapClassType = (key) => {
     case "profession_caster":
       return "caster";
     case "profession_assault":
-      return "striker";
+      return "assault";
     default:
       return "unknown";
   }
@@ -55,13 +57,13 @@ const mapCharacterWeaponType = (key) => {
     case "weapon_type_sword":
       return "sword";
     case "weapon_type_claymores":
-      return "great_sword";
+      return "claymores";
     case "weapon_type_lance":
-      return "polearm";
+      return "lance";
     case "weapon_type_pistol":
-      return "handcannon";
+      return "pistol";
     case "weapon_type_wand":
-      return "arts_unit";
+      return "wand";
     default:
       return "unknown";
   }
@@ -87,7 +89,7 @@ const generateOperatorsTs = () => {
     rarity: ${q(mapRarity(char.rarity?.value))},
     element: ${q(mapElement(char.property?.key))},
     weaponType: ${q(mapCharacterWeaponType(char.weaponType?.key))},
-    classType: ${q(mapClassType(char.profession?.key))},
+    profession: ${q(mapProfession(char.profession?.key))},
     profileImage: ${q(char.avatarSqUrl)},
     standingImage: ${q(char.illustrationUrl)},
     avatarSqUrl: ${q(char.avatarSqUrl)},
@@ -101,27 +103,27 @@ const generateOperatorsTs = () => {
 
 export type CharacterElement =
   | "physical"
-  | "cryo"
-  | "heat"
-  | "nature"
-  | "electric"
+  | "cryst"
+  | "fire"
+  | "natural"
+  | "pulse"
   | "unknown";
 
 export type CharacterWeaponType =
   | "sword"
-  | "great_sword"
-  | "polearm"
-  | "handcannon"
-  | "arts_unit"
+  | "claymores"
+  | "lance"
+  | "pistol"
+  | "wand"
   | "unknown";
 
-export type CharacterClass =
+export type CharacterProfession =
   | "vanguard"
   | "guard"
   | "defender"
   | "supporter"
   | "caster"
-  | "striker"
+  | "assault"
   | "unknown";
 
 export type CharacterMeta = {
@@ -130,7 +132,7 @@ export type CharacterMeta = {
   rarity: CharacterRarity;
   element: CharacterElement;
   weaponType: CharacterWeaponType;
-  classType: CharacterClass;
+  profession: CharacterProfession;
   profileImage: string;
   standingImage: string;
   avatarSqUrl: string;
@@ -158,7 +160,7 @@ export const getCharacterMeta = (charId: string): CharacterMeta => {
       rarity: "unknown",
       element: "unknown",
       weaponType: "unknown",
-      classType: "unknown",
+      profession: "unknown",
       profileImage: CHARACTER_PLACEHOLDER_IMAGE,
       standingImage: CHARACTER_PLACEHOLDER_IMAGE,
       avatarSqUrl: "",
@@ -181,29 +183,29 @@ export const CHARACTER_PLACEHOLDER_IMAGE = "/images/placeholder.svg";
 
 export const CHARACTER_ELEMENT_LABEL: Record<CharacterElement, string> = {
   physical: "물리",
-  cryo: "냉기",
-  heat: "열기",
-  nature: "자연",
-  electric: "전기",
+  cryst: "냉기",
+  fire: "열기",
+  natural: "자연",
+  pulse: "전기",
   unknown: "미분류",
 };
 
 export const CHARACTER_WEAPON_TYPE_LABEL: Record<CharacterWeaponType, string> = {
   sword: "한손검",
-  great_sword: "양손검",
-  polearm: "장병기",
-  handcannon: "권총",
-  arts_unit: "아츠 유닛",
+  claymores: "양손검",
+  lance: "장병기",
+  pistol: "권총",
+  wand: "아츠 유닛",
   unknown: "미분류",
 };
 
-export const CHARACTER_CLASS_LABEL: Record<CharacterClass, string> = {
+export const CHARACTER_PROFESSION_LABEL: Record<CharacterProfession, string> = {
   vanguard: "뱅가드",
   guard: "가드",
   defender: "디펜더",
   supporter: "서포터",
   caster: "캐스터",
-  striker: "스트라이커",
+  assault: "스트라이커",
   unknown: "미분류",
 };
 
@@ -236,10 +238,10 @@ const generateWeaponsTs = () => {
 
 export type WeaponType =
   | "sword"
-  | "great_sword"
-  | "polearm"
-  | "handcannon"
-  | "arts_unit"
+  | "claymores"
+  | "lance"
+  | "pistol"
+  | "wand"
   | "unknown";
 
 export type WeaponSkill = {
@@ -299,10 +301,10 @@ export const WEAPON_RARITY_LABEL: Record<WeaponRarity, string> = {
 
 export const WEAPON_TYPE_LABEL: Record<WeaponType, string> = {
   sword: "한손검",
-  great_sword: "양손검",
-  polearm: "장병기",
-  handcannon: "권총",
-  arts_unit: "아츠 유닛",
+  claymores: "양손검",
+  lance: "장병기",
+  pistol: "권총",
+  wand: "아츠 유닛",
   unknown: "미분류",
 };
 `;
