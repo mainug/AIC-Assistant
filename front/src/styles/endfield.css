@@ -1161,6 +1161,70 @@ body {
 }
 
 /* =========================
+   Empty State
+========================= */
+
+.empty-state {
+  min-height: 420px;
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(245, 197, 66, 0.12),
+      transparent 34%
+    ),
+    rgba(244, 241, 232, 0.045);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 44px 28px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.empty-state-eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.empty-state-title {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: -0.05em;
+}
+
+.empty-state-description {
+  max-width: 520px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.empty-state-action {
+  margin-top: 8px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-yellow);
+  background: rgba(245, 197, 66, 0.12);
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.empty-state-action:hover {
+  background: rgba(245, 197, 66, 0.18);
+}
+
+/* =========================
    Responsive
 ========================= */
 

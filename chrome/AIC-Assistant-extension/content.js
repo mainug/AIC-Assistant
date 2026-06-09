@@ -9,11 +9,11 @@ window.addEventListener("message", (event) => {
 
   const message = event.data;
 
-  if (!message || message.source !== "AIC-Assistant") return;
+  if (!message || message.source !== "AIC Assistant") return;
 
   if (message.type === "USER_GAME_DATA_DETECTED") {
     console.log(
-      "[AIC-Assistant/content] received user-game-data",
+      "[AIC Assistant/content] received user-game-data",
       message.payload,
     );
 

@@ -102,8 +102,7 @@ function EndfieldWeaponStatisticsDetailPage() {
 
           <h1 className="page-title">{meta.name} 상세 정보</h1>
           <p className="page-description">
-            EF Data에 공유된 유저 데이터를 기준으로 해당 무기의 보유율과 기본
-            정보를 표시합니다.
+            AIC Assistant에 공유된 유저 데이터를 기준으로 합니다.
           </p>
         </header>
 

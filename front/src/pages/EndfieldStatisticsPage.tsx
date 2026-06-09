@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   CHARACTER_CLASS_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -57,6 +57,14 @@ type WeaponRarityFilter = "all" | WeaponRarity;
 type WeaponTypeFilter = "all" | WeaponType;
 
 type SortMode = "ownershipDesc" | "ownershipAsc" | "nameAsc" | "rarityDesc";
+
+type EmptyStateProps = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  actionLabel?: string;
+  actionHref?: string;
+};
 
 function EndfieldStatisticsPage() {
   const navigate = useNavigate();
@@ -348,7 +356,13 @@ function EndfieldStatisticsPage() {
   if (loading) {
     return (
       <div className="page">
-        <div className="page-inner">불러오는 중...</div>
+        <main className="page-inner">
+          <EmptyState
+            eyebrow="LOADING"
+            title="통계 데이터를 불러오는 중입니다."
+            description="공유된 Endfield 데이터를 기준으로 통계를 계산하고 있습니다."
+          />
+        </main>
       </div>
     );
   }
@@ -356,7 +370,15 @@ function EndfieldStatisticsPage() {
   if (error) {
     return (
       <div className="page">
-        <div className="page-inner">{error}</div>
+        <main className="page-inner">
+          <EmptyState
+            eyebrow="ERROR"
+            title="통계 데이터를 불러오지 못했습니다."
+            description="백엔드 서버가 실행 중인지 확인한 뒤 다시 시도해 주세요."
+            actionLabel="홈으로 이동"
+            actionHref="/"
+          />
+        </main>
       </div>
     );
   }
@@ -714,7 +736,12 @@ function CharacterStatisticsGrid({
   onSelect: (charId: string) => void;
 }) {
   if (characters.length === 0) {
-    return <div className="empty-text">캐릭터 통계 데이터가 없습니다.</div>;
+    return (
+      <div className="empty-text">
+        조건에 맞는 캐릭터 통계가 없습니다. 필터를 초기화하거나 검색어를
+        바꿔보세요.
+      </div>
+    );
   }
 
   return (
@@ -772,7 +799,12 @@ function WeaponStatisticsGrid({
   onSelect: (weaponId: string) => void;
 }) {
   if (weapons.length === 0) {
-    return <div className="empty-text">무기 통계 데이터가 없습니다.</div>;
+    return (
+      <div className="empty-text">
+        조건에 맞는 무기 통계가 없습니다. 필터를 초기화하거나 검색어를
+        바꿔보세요.
+      </div>
+    );
   }
 
   return (
@@ -891,6 +923,28 @@ function getRarityRank(rarity: number | string) {
   if (rarity === 5) return 5;
   if (rarity === 4) return 4;
   return 0;
+}
+
+function EmptyState({
+  eyebrow,
+  title,
+  description,
+  actionLabel,
+  actionHref,
+}: EmptyStateProps) {
+  return (
+    <section className="empty-state">
+      {eyebrow && <div className="empty-state-eyebrow">{eyebrow}</div>}
+      <h2 className="empty-state-title">{title}</h2>
+      <p className="empty-state-description">{description}</p>
+
+      {actionLabel && actionHref && (
+        <Link className="empty-state-action" to={actionHref}>
+          {actionLabel}
+        </Link>
+      )}
+    </section>
+  );
 }
 
 export default EndfieldStatisticsPage;

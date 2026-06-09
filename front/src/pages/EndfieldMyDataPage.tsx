@@ -34,6 +34,14 @@ type Weapon = {
 
 type ViewMode = "characters" | "weapons";
 
+type EmptyStateProps = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  actionLabel?: string;
+  actionHref?: string;
+};
+
 function EndfieldMyDataPage() {
   const { roleId } = useParams<{ roleId: string }>();
   const navigate = useNavigate();
@@ -132,7 +140,13 @@ function EndfieldMyDataPage() {
   if (loading) {
     return (
       <div className="page">
-        <div className="page-inner">불러오는 중...</div>
+        <main className="page-inner">
+          <EmptyState
+            eyebrow="LOADING"
+            title="데이터를 불러오는 중입니다."
+            description="공유된 Endfield 데이터를 확인하고 있습니다."
+          />
+        </main>
       </div>
     );
   }
@@ -140,7 +154,15 @@ function EndfieldMyDataPage() {
   if (error) {
     return (
       <div className="page">
-        <div className="page-inner">{error}</div>
+        <main className="page-inner">
+          <EmptyState
+            eyebrow="ERROR"
+            title="데이터를 불러오지 못했습니다."
+            description="확장 프로그램에서 데이터를 공유했는지 확인한 뒤 다시 시도해 주세요."
+            actionLabel="전체 통계 보기"
+            actionHref="/endfield/statistics"
+          />
+        </main>
       </div>
     );
   }
@@ -266,7 +288,11 @@ function CharacterShowcaseGrid({
   onSelect: (charId: string) => void;
 }) {
   if (characters.length === 0) {
-    return <div className="empty-text">보유 캐릭터 데이터가 없습니다.</div>;
+    return (
+      <div className="empty-text">
+        조건에 맞는 보유 캐릭터가 없습니다. 검색어를 바꿔보세요.
+      </div>
+    );
   }
 
   return (
@@ -324,7 +350,11 @@ function WeaponShowcaseGrid({
   onSelect: (weaponId: string) => void;
 }) {
   if (weapons.length === 0) {
-    return <div className="empty-text">보유 무기 데이터가 없습니다.</div>;
+    return (
+      <div className="empty-text">
+        조건에 맞는 보유 무기가 없습니다. 검색어를 바꿔보세요.
+      </div>
+    );
   }
 
   return (
@@ -401,6 +431,28 @@ function formatDateTime(value?: string) {
   } catch {
     return value;
   }
+}
+
+function EmptyState({
+  eyebrow,
+  title,
+  description,
+  actionLabel,
+  actionHref,
+}: EmptyStateProps) {
+  return (
+    <section className="empty-state">
+      {eyebrow && <div className="empty-state-eyebrow">{eyebrow}</div>}
+      <h2 className="empty-state-title">{title}</h2>
+      <p className="empty-state-description">{description}</p>
+
+      {actionLabel && actionHref && (
+        <Link className="empty-state-action" to={actionHref}>
+          {actionLabel}
+        </Link>
+      )}
+    </section>
+  );
 }
 
 export default EndfieldMyDataPage;

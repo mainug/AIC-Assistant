@@ -133,8 +133,7 @@ function EndfieldCharacterStatisticsDetailPage() {
 
           <h1 className="page-title">{meta.name} 상세 통계</h1>
           <p className="page-description">
-            AIC Assistant에 공유된 유저 데이터를 기준으로 해당 캐릭터의 보유율,
-            정예화 단계, 주요 레벨 구간을 표시합니다.
+            AIC Assistant에 공유된 유저 데이터를 기준으로 합니다.
           </p>
         </header>
 
