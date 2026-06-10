@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { API_BASE_URL } from "../api/config";
+
+import {
+  fetchUserCharacters,
+  fetchUserProfile,
+  fetchUserWeapons,
+} from "../api/endfield";
+
+import type { UserCharacter, UserProfile, UserWeapon } from "../types/endfield";
+
 import {
   CHARACTER_PROFESSION_LABEL,
   CHARACTER_ELEMENT_LABEL,
@@ -14,52 +22,26 @@ import {
   WEAPON_TYPE_LABEL,
   getWeaponMeta,
 } from "../data/weapons";
+
+import { formatDateTime, getRarityRank } from "../utils/endfieldFormat";
+
+import CharacterIconStack from "../components/endfield/CharacterIconStack";
+import EmptyState from "../components/endfield/EmptyState";
+import StatCard from "../components/endfield/StatCard";
+
 import "../styles/endfield.css";
-
-type Profile = {
-  roleId: string;
-  lastSyncedAt: string;
-};
-
-type Character = {
-  charId: string;
-  level: number;
-  evolvePhase: number;
-  owned: boolean;
-};
-
-type Weapon = {
-  weaponId: string;
-  owned: boolean;
-};
 
 type ViewMode = "characters" | "weapons";
 
 type MyDataSortMode = "levelDesc" | "evolveDesc" | "nameAsc" | "rarityDesc";
 
-type EmptyStateProps = {
-  eyebrow?: string;
-  title: string;
-  description: string;
-  actionLabel?: string;
-  actionHref?: string;
-};
-
-function getElementIconPath(element: string) {
-  return `/icons/endfield/elements/${element}.png`;
-}
-
-function getProfessionIconPath(profession: string) {
-  return `/icons/endfield/professions/${profession}.png`;
-}
-
 function EndfieldMyDataPage() {
   const { roleId } = useParams<{ roleId: string }>();
   const navigate = useNavigate();
 
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [weapons, setWeapons] = useState<Weapon[]>([]);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [characters, setCharacters] = useState<UserCharacter[]>([]);
+  const [weapons, setWeapons] = useState<UserWeapon[]>([]);
   const [viewMode, setViewMode] = useState<ViewMode>("characters");
   const [keyword, setKeyword] = useState("");
   const [sortMode, setSortMode] = useState<MyDataSortMode>("levelDesc");
@@ -80,19 +62,15 @@ function EndfieldMyDataPage() {
         setLoading(true);
         setError("");
 
-        const [profileRes, charactersRes, weaponsRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/profile`),
-          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/characters`),
-          fetch(`${API_BASE_URL}/api/endfield/users/${roleId}/weapons`),
+        const [profileData, charactersData, weaponsData] = await Promise.all([
+          fetchUserProfile(roleId),
+          fetchUserCharacters(roleId),
+          fetchUserWeapons(roleId),
         ]);
 
-        if (!profileRes.ok) throw new Error("프로필 조회 실패");
-        if (!charactersRes.ok) throw new Error("캐릭터 조회 실패");
-        if (!weaponsRes.ok) throw new Error("무기 조회 실패");
-
-        setProfile(await profileRes.json());
-        setCharacters(await charactersRes.json());
-        setWeapons(await weaponsRes.json());
+        setProfile(profileData);
+        setCharacters(charactersData);
+        setWeapons(weaponsData);
       } catch (err) {
         console.error(err);
         setError("데이터를 불러오지 못했습니다.");
@@ -365,7 +343,7 @@ function CharacterShowcaseGrid({
   characters,
   onSelect,
 }: {
-  characters: Character[];
+  characters: UserCharacter[];
   onSelect: (charId: string) => void;
 }) {
   if (characters.length === 0) {
@@ -388,21 +366,10 @@ function CharacterShowcaseGrid({
             onClick={() => onSelect(character.charId)}
           >
             <div className="collection-image-area">
-              <div className="character-icon-stack">
-                <div className="character-mini-icon">
-                  <img
-                    src={getElementIconPath(meta.element)}
-                    alt={CHARACTER_ELEMENT_LABEL[meta.element]}
-                  />
-                </div>
-
-                <div className="character-mini-icon">
-                  <img
-                    src={getProfessionIconPath(meta.profession)}
-                    alt={CHARACTER_PROFESSION_LABEL[meta.profession]}
-                  />
-                </div>
-              </div>
+              <CharacterIconStack
+                element={meta.element}
+                profession={meta.profession}
+              />
 
               <img
                 referrerPolicy="no-referrer"
@@ -443,7 +410,7 @@ function WeaponShowcaseGrid({
   weapons,
   onSelect,
 }: {
-  weapons: Weapon[];
+  weapons: UserWeapon[];
   onSelect: (weaponId: string) => void;
 }) {
   if (weapons.length === 0) {
@@ -495,67 +462,6 @@ function WeaponShowcaseGrid({
         );
       })}
     </div>
-  );
-}
-
-type StatCardProps = {
-  title: string;
-  value: string;
-};
-
-function StatCard({ title, value }: StatCardProps) {
-  return (
-    <div className="stat-card">
-      <div className="stat-label">{title}</div>
-      <div className="stat-value">{value}</div>
-    </div>
-  );
-}
-
-function getRarityRank(rarity: number | string) {
-  if (rarity === 6) return 6;
-  if (rarity === 5) return 5;
-  if (rarity === 4) return 4;
-  return 0;
-}
-
-function formatDateTime(value?: string) {
-  if (!value) return "-";
-
-  try {
-    const date = new Date(value);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hour = String(date.getHours()).padStart(2, "0");
-    const minute = String(date.getMinutes()).padStart(2, "0");
-
-    return `${year}.${month}.${day} ${hour}:${minute}`;
-  } catch {
-    return value;
-  }
-}
-
-function EmptyState({
-  eyebrow,
-  title,
-  description,
-  actionLabel,
-  actionHref,
-}: EmptyStateProps) {
-  return (
-    <section className="empty-state">
-      {eyebrow && <div className="empty-state-eyebrow">{eyebrow}</div>}
-      <h2 className="empty-state-title">{title}</h2>
-      <p className="empty-state-description">{description}</p>
-
-      {actionLabel && actionHref && (
-        <Link className="empty-state-action" to={actionHref}>
-          {actionLabel}
-        </Link>
-      )}
-    </section>
   );
 }
 

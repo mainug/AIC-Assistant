@@ -1,14 +1,29 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { API_BASE_URL } from "../api/config";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+import {
+  fetchCharacterOwnership,
+  fetchEndfieldStatisticsSummary,
+  fetchUserCharacters,
+  fetchUserWeapons,
+  fetchWeaponOwnership,
+} from "../api/endfield";
+
+import type {
+  CharacterOwnership,
+  EndfieldStatisticsSummary,
+  UserCharacter,
+  UserWeapon,
+  WeaponOwnership,
+} from "../types/endfield";
+
 import {
   CHARACTER_PROFESSION_LABEL,
   CHARACTER_ELEMENT_LABEL,
   CHARACTER_META_MAP,
   CHARACTER_PLACEHOLDER_IMAGE,
   CHARACTER_RARITY_LABEL,
-  CHARACTER_WEAPON_TYPE_LABEL,
   getCharacterMeta,
   type CharacterProfession,
   type CharacterElement,
@@ -24,27 +39,15 @@ import {
   type WeaponRarity,
   type WeaponType,
 } from "../data/weapons";
+
+import { formatRate, getRarityRank } from "../utils/endfieldFormat";
+
+import CharacterIconStack from "../components/endfield/CharacterIconStack";
+import EmptyState from "../components/endfield/EmptyState";
+import StatCard from "../components/endfield/StatCard";
+import StatisticsToolbar from "../components/endfield/StatisticsToolbar";
+
 import "../styles/endfield.css";
-
-type Summary = {
-  totalUsers: number;
-  totalCharacters: number;
-  totalWeapons: number;
-};
-
-type CharacterOwnership = {
-  charId: string;
-  ownedCount: number;
-  totalUsers: number;
-  ownershipRate: number;
-};
-
-type WeaponOwnership = {
-  weaponId: string;
-  ownedCount: number;
-  totalUsers: number;
-  ownershipRate: number;
-};
 
 type StatisticsViewMode = "characters" | "weapons";
 type OwnershipFilter = "all" | "ownedOnly";
@@ -59,38 +62,12 @@ type WeaponTypeFilter = "all" | WeaponType;
 
 type SortMode = "ownershipDesc" | "ownershipAsc" | "nameAsc" | "rarityDesc";
 
-type MyCharacter = {
-  charId: string;
-  level: number;
-  evolvePhase: number;
-  owned: boolean;
-};
-
-type MyWeapon = {
-  weaponId: string;
-  owned: boolean;
-};
-
-type EmptyStateProps = {
-  eyebrow?: string;
-  title: string;
-  description: string;
-  actionLabel?: string;
-  actionHref?: string;
-};
-
-function getElementIconPath(element: string) {
-  return `/icons/endfield/elements/${element}.png`;
-}
-
-function getProfessionIconPath(profession: string) {
-  return `/icons/endfield/professions/${profession}.png`;
-}
-
 function EndfieldStatisticsPage() {
   const navigate = useNavigate();
 
-  const [summary, setSummary] = useState<Summary | null>(null);
+  const [summary, setSummary] = useState<EndfieldStatisticsSummary | null>(
+    null,
+  );
   const [characters, setCharacters] = useState<CharacterOwnership[]>([]);
   const [weapons, setWeapons] = useState<WeaponOwnership[]>([]);
 
@@ -131,8 +108,8 @@ function EndfieldStatisticsPage() {
     setStoredRoleId(roleIdFromUrl);
   }, [roleIdFromUrl]);
 
-  const [myCharacters, setMyCharacters] = useState<MyCharacter[]>([]);
-  const [myWeapons, setMyWeapons] = useState<MyWeapon[]>([]);
+  const [myCharacters, setMyCharacters] = useState<UserCharacter[]>([]);
+  const [myWeapons, setMyWeapons] = useState<UserWeapon[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -144,40 +121,26 @@ function EndfieldStatisticsPage() {
         setError("");
 
         const [
-          summaryRes,
-          charactersRes,
-          weaponsRes,
-          myCharactersRes,
-          myWeaponsRes,
+          summaryData,
+          charactersData,
+          weaponsData,
+          myCharactersData,
+          myWeaponsData,
         ] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/endfield/statistics/summary`),
-          fetch(`${API_BASE_URL}/api/endfield/statistics/characters/ownership`),
-          fetch(`${API_BASE_URL}/api/endfield/statistics/weapons/ownership`),
+          fetchEndfieldStatisticsSummary(),
+          fetchCharacterOwnership(),
+          fetchWeaponOwnership(),
           currentRoleId
-            ? fetch(
-                `${API_BASE_URL}/api/endfield/users/${currentRoleId}/characters`,
-              )
-            : Promise.resolve(null),
-          currentRoleId
-            ? fetch(
-                `${API_BASE_URL}/api/endfield/users/${currentRoleId}/weapons`,
-              )
-            : Promise.resolve(null),
+            ? fetchUserCharacters(currentRoleId)
+            : Promise.resolve([]),
+          currentRoleId ? fetchUserWeapons(currentRoleId) : Promise.resolve([]),
         ]);
 
-        if (!summaryRes.ok) throw new Error("요약 통계 조회 실패");
-        if (!charactersRes.ok) throw new Error("캐릭터 보유율 조회 실패");
-        if (!weaponsRes.ok) throw new Error("무기 보유율 조회 실패");
-        if (myCharactersRes && !myCharactersRes.ok)
-          throw new Error("내 캐릭터 조회 실패");
-        if (myWeaponsRes && !myWeaponsRes.ok)
-          throw new Error("내 무기 조회 실패");
-
-        setSummary(await summaryRes.json());
-        setCharacters(await charactersRes.json());
-        setWeapons(await weaponsRes.json());
-        setMyCharacters(myCharactersRes ? await myCharactersRes.json() : []);
-        setMyWeapons(myWeaponsRes ? await myWeaponsRes.json() : []);
+        setSummary(summaryData);
+        setCharacters(charactersData);
+        setWeapons(weaponsData);
+        setMyCharacters(myCharactersData);
+        setMyWeapons(myWeaponsData);
       } catch (err) {
         console.error(err);
         setError("통계 데이터를 불러오지 못했습니다.");
@@ -417,20 +380,6 @@ function EndfieldStatisticsPage() {
     sortMode,
   ]);
 
-  const resetFilters = () => {
-    setKeyword("");
-    setOwnershipFilter("all");
-    setSortMode("ownershipDesc");
-
-    setCharacterRarityFilter("all");
-    setElementFilter("all");
-    setClassFilter("all");
-    setCharacterWeaponTypeFilter("all");
-
-    setWeaponRarityFilter("all");
-    setWeaponTypeFilter("all");
-  };
-
   if (loading) {
     return (
       <div className="page">
@@ -496,143 +445,33 @@ function EndfieldStatisticsPage() {
             </div>
           </div>
 
-          <div className="toolbar statistics-toolbar">
-            <div className="toolbar-row toolbar-row-primary">
-              <div className="entity-tabs">
-                <button
-                  className={`entity-tab ${viewMode === "characters" ? "active" : ""}`}
-                  onClick={() => {
-                    resetFilters();
-                    setViewMode("characters");
-                    setFilterOpen(false);
-                  }}
-                >
-                  캐릭터 {allCharacters.length}
-                </button>
-
-                <button
-                  className={`entity-tab ${viewMode === "weapons" ? "active" : ""}`}
-                  onClick={() => {
-                    resetFilters();
-                    setViewMode("weapons");
-                    setFilterOpen(false);
-                  }}
-                >
-                  무기 {allWeapons.length}
-                </button>
-              </div>
-            </div>
-
-            <div className="toolbar-row toolbar-row-filters">
-              <div className="entity-tabs">
-                <button
-                  className={`entity-tab ${ownershipFilter === "all" ? "active" : ""}`}
-                  onClick={() => setOwnershipFilter("all")}
-                >
-                  전체
-                </button>
-
-                <button
-                  className={`entity-tab ${
-                    ownershipFilter === "ownedOnly" ? "active" : ""
-                  }`}
-                  onClick={() => setOwnershipFilter("ownedOnly")}
-                  disabled={!currentRoleId}
-                  title={
-                    currentRoleId
-                      ? `저장된 roleId ${currentRoleId} 기준으로 필터링합니다.`
-                      : "확장 프로그램에서 통계 보기 또는 내 데이터 보기를 한 번 실행하면 사용할 수 있습니다."
-                  }
-                >
-                  {viewMode === "characters"
-                    ? "내 보유 캐릭터만"
-                    : "내 보유 무기만"}
-                </button>
-              </div>
-
-              <input
-                className="search-input statistics-search-input"
-                value={keyword}
-                onChange={(event) => setKeyword(event.target.value)}
-                placeholder={
-                  viewMode === "characters"
-                    ? "캐릭터 이름 검색"
-                    : "무기 이름 검색"
-                }
-              />
-
-              <select
-                className="search-input statistics-search-input"
-                value={sortMode}
-                onChange={(event) =>
-                  setSortMode(event.target.value as SortMode)
-                }
-              >
-                <option value="ownershipDesc">보유율 높은 순</option>
-                <option value="ownershipAsc">보유율 낮은 순</option>
-                <option value="nameAsc">이름순</option>
-                <option value="rarityDesc">성급 높은 순</option>
-              </select>
-
-              <div className="filter-dropdown-wrap">
-                <button
-                  className={`filter-toggle-button ${filterOpen ? "active" : ""}`}
-                  type="button"
-                  onClick={() => setFilterOpen((prev) => !prev)}
-                >
-                  필터
-                </button>
-
-                {filterOpen && (
-                  <div className="filter-dropdown">
-                    <div className="filter-dropdown-header">
-                      <div>
-                        <strong>필터</strong>
-                        <p>조건을 선택해 통계를 좁혀봅니다.</p>
-                      </div>
-
-                      <button
-                        className="filter-reset-button"
-                        type="button"
-                        onClick={() => {
-                          resetFilters();
-                          if (viewMode === "characters") {
-                            setViewMode("characters");
-                          } else {
-                            setViewMode("weapons");
-                          }
-                          setFilterOpen(true);
-                        }}
-                        title="필터 초기화"
-                      >
-                        ↻
-                      </button>
-                    </div>
-
-                    {viewMode === "characters" ? (
-                      <CharacterFilters
-                        rarityFilter={characterRarityFilter}
-                        elementFilter={elementFilter}
-                        classFilter={classFilter}
-                        weaponTypeFilter={characterWeaponTypeFilter}
-                        onRarityChange={setCharacterRarityFilter}
-                        onElementChange={setElementFilter}
-                        onClassChange={setClassFilter}
-                        onWeaponTypeChange={setCharacterWeaponTypeFilter}
-                      />
-                    ) : (
-                      <WeaponFilters
-                        rarityFilter={weaponRarityFilter}
-                        weaponTypeFilter={weaponTypeFilter}
-                        onRarityChange={setWeaponRarityFilter}
-                        onWeaponTypeChange={setWeaponTypeFilter}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <StatisticsToolbar
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            ownershipFilter={ownershipFilter}
+            setOwnershipFilter={setOwnershipFilter}
+            searchKeyword={keyword}
+            setSearchKeyword={setKeyword}
+            sortMode={sortMode}
+            setSortMode={setSortMode}
+            filterOpen={filterOpen}
+            setFilterOpen={setFilterOpen}
+            characterRarityFilter={characterRarityFilter}
+            setCharacterRarityFilter={setCharacterRarityFilter}
+            elementFilter={elementFilter}
+            setElementFilter={setElementFilter}
+            classFilter={classFilter}
+            setClassFilter={setClassFilter}
+            characterWeaponTypeFilter={characterWeaponTypeFilter}
+            setCharacterWeaponTypeFilter={setCharacterWeaponTypeFilter}
+            weaponRarityFilter={weaponRarityFilter}
+            setWeaponRarityFilter={setWeaponRarityFilter}
+            weaponTypeFilter={weaponTypeFilter}
+            setWeaponTypeFilter={setWeaponTypeFilter}
+            characterCount={characters.length}
+            weaponCount={weapons.length}
+            currentRoleId={currentRoleId}
+          />
 
           <div style={{ marginTop: 18 }}>
             {viewMode === "characters" ? (
@@ -667,154 +506,6 @@ function EndfieldStatisticsPage() {
   );
 }
 
-function CharacterFilters({
-  rarityFilter,
-  elementFilter,
-  classFilter,
-  weaponTypeFilter,
-  onRarityChange,
-  onElementChange,
-  onClassChange,
-  onWeaponTypeChange,
-}: {
-  rarityFilter: CharacterRarityFilter;
-  elementFilter: CharacterElementFilter;
-  classFilter: CharacterClassFilter;
-  weaponTypeFilter: CharacterWeaponTypeFilter;
-  onRarityChange: (value: CharacterRarityFilter) => void;
-  onElementChange: (value: CharacterElementFilter) => void;
-  onClassChange: (value: CharacterClassFilter) => void;
-  onWeaponTypeChange: (value: CharacterWeaponTypeFilter) => void;
-}) {
-  return (
-    <div className="filter-panel">
-      <FilterGroup title="성급">
-        <FilterButton
-          active={rarityFilter === "all"}
-          onClick={() => onRarityChange("all")}
-        >
-          전체
-        </FilterButton>
-        {[6, 5, 4, "unknown"].map((rarity) => (
-          <FilterButton
-            key={String(rarity)}
-            active={rarityFilter === rarity}
-            onClick={() => onRarityChange(rarity as CharacterRarityFilter)}
-          >
-            {CHARACTER_RARITY_LABEL[rarity as CharacterRarity]}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-
-      <FilterGroup title="속성">
-        <FilterButton
-          active={elementFilter === "all"}
-          onClick={() => onElementChange("all")}
-        >
-          전체
-        </FilterButton>
-        {Object.entries(CHARACTER_ELEMENT_LABEL).map(([key, label]) => (
-          <FilterButton
-            key={key}
-            active={elementFilter === key}
-            onClick={() => onElementChange(key as CharacterElementFilter)}
-          >
-            {label}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-
-      <FilterGroup title="직업군">
-        <FilterButton
-          active={classFilter === "all"}
-          onClick={() => onClassChange("all")}
-        >
-          전체
-        </FilterButton>
-        {Object.entries(CHARACTER_PROFESSION_LABEL).map(([key, label]) => (
-          <FilterButton
-            key={key}
-            active={classFilter === key}
-            onClick={() => onClassChange(key as CharacterClassFilter)}
-          >
-            {label}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-
-      <FilterGroup title="사용 무기">
-        <FilterButton
-          active={weaponTypeFilter === "all"}
-          onClick={() => onWeaponTypeChange("all")}
-        >
-          전체
-        </FilterButton>
-        {Object.entries(CHARACTER_WEAPON_TYPE_LABEL).map(([key, label]) => (
-          <FilterButton
-            key={key}
-            active={weaponTypeFilter === key}
-            onClick={() => onWeaponTypeChange(key as CharacterWeaponTypeFilter)}
-          >
-            {label}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-    </div>
-  );
-}
-
-function WeaponFilters({
-  rarityFilter,
-  weaponTypeFilter,
-  onRarityChange,
-  onWeaponTypeChange,
-}: {
-  rarityFilter: WeaponRarityFilter;
-  weaponTypeFilter: WeaponTypeFilter;
-  onRarityChange: (value: WeaponRarityFilter) => void;
-  onWeaponTypeChange: (value: WeaponTypeFilter) => void;
-}) {
-  return (
-    <div className="filter-panel">
-      <FilterGroup title="성급">
-        <FilterButton
-          active={rarityFilter === "all"}
-          onClick={() => onRarityChange("all")}
-        >
-          전체
-        </FilterButton>
-        {[6, 5, 4, "unknown"].map((rarity) => (
-          <FilterButton
-            key={String(rarity)}
-            active={rarityFilter === rarity}
-            onClick={() => onRarityChange(rarity as WeaponRarityFilter)}
-          >
-            {WEAPON_RARITY_LABEL[rarity as WeaponRarity]}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-
-      <FilterGroup title="무기 타입">
-        <FilterButton
-          active={weaponTypeFilter === "all"}
-          onClick={() => onWeaponTypeChange("all")}
-        >
-          전체
-        </FilterButton>
-        {Object.entries(WEAPON_TYPE_LABEL).map(([key, label]) => (
-          <FilterButton
-            key={key}
-            active={weaponTypeFilter === key}
-            onClick={() => onWeaponTypeChange(key as WeaponTypeFilter)}
-          >
-            {label}
-          </FilterButton>
-        ))}
-      </FilterGroup>
-    </div>
-  );
-}
-
 function CharacterStatisticsGrid({
   characters,
   onSelect,
@@ -844,29 +535,10 @@ function CharacterStatisticsGrid({
             onClick={() => onSelect(character.charId)}
           >
             <div className="collection-image-area">
-              <div className="character-icon-stack">
-                <div className="character-mini-icon">
-                  {meta.element === "unknown" ? (
-                    <span>미분류</span>
-                  ) : (
-                    <img
-                      src={getElementIconPath(meta.element)}
-                      alt={CHARACTER_ELEMENT_LABEL[meta.element]}
-                    />
-                  )}
-                </div>
-
-                <div className="character-mini-icon">
-                  {meta.profession === "unknown" ? (
-                    <span>미분류</span>
-                  ) : (
-                    <img
-                      src={getProfessionIconPath(meta.profession)}
-                      alt={CHARACTER_PROFESSION_LABEL[meta.profession]}
-                    />
-                  )}
-                </div>
-              </div>
+              <CharacterIconStack
+                element={meta.element}
+                profession={meta.profession}
+              />
 
               <img
                 referrerPolicy="no-referrer"
@@ -981,91 +653,6 @@ function WeaponStatisticsGrid({
         );
       })}
     </div>
-  );
-}
-
-function FilterGroup({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="filter-group">
-      <div className="filter-title">{title}</div>
-      <div className="entity-tabs">{children}</div>
-    </div>
-  );
-}
-
-function FilterButton({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      className={`entity-tab ${active ? "active" : ""}`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
-
-type StatCardProps = {
-  title: string;
-  value: string;
-};
-
-function StatCard({ title, value }: StatCardProps) {
-  return (
-    <div className="stat-card">
-      <div className="stat-label">{title}</div>
-      <div className="stat-value">{value}</div>
-    </div>
-  );
-}
-
-function getRarityRank(rarity: number | string) {
-  if (rarity === 6) return 6;
-  if (rarity === 5) return 5;
-  if (rarity === 4) return 4;
-  return 0;
-}
-
-function formatRate(rate: number) {
-  if (Number.isInteger(rate)) {
-    return String(rate);
-  }
-
-  return rate.toFixed(1);
-}
-
-function EmptyState({
-  eyebrow,
-  title,
-  description,
-  actionLabel,
-  actionHref,
-}: EmptyStateProps) {
-  return (
-    <section className="empty-state">
-      {eyebrow && <div className="empty-state-eyebrow">{eyebrow}</div>}
-      <h2 className="empty-state-title">{title}</h2>
-      <p className="empty-state-description">{description}</p>
-
-      {actionLabel && actionHref && (
-        <Link className="empty-state-action" to={actionHref}>
-          {actionLabel}
-        </Link>
-      )}
-    </section>
   );
 }
 
