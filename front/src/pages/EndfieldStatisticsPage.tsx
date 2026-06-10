@@ -496,13 +496,11 @@ function EndfieldStatisticsPage() {
             </div>
           </div>
 
-          <div className="toolbar">
-            <div className="toolbar-left">
+          <div className="toolbar statistics-toolbar">
+            <div className="toolbar-row toolbar-row-primary">
               <div className="entity-tabs">
                 <button
-                  className={`entity-tab ${
-                    viewMode === "characters" ? "active" : ""
-                  }`}
+                  className={`entity-tab ${viewMode === "characters" ? "active" : ""}`}
                   onClick={() => {
                     resetFilters();
                     setViewMode("characters");
@@ -513,9 +511,7 @@ function EndfieldStatisticsPage() {
                 </button>
 
                 <button
-                  className={`entity-tab ${
-                    viewMode === "weapons" ? "active" : ""
-                  }`}
+                  className={`entity-tab ${viewMode === "weapons" ? "active" : ""}`}
                   onClick={() => {
                     resetFilters();
                     setViewMode("weapons");
@@ -527,12 +523,10 @@ function EndfieldStatisticsPage() {
               </div>
             </div>
 
-            <div className="toolbar-right">
+            <div className="toolbar-row toolbar-row-filters">
               <div className="entity-tabs">
                 <button
-                  className={`entity-tab ${
-                    ownershipFilter === "all" ? "active" : ""
-                  }`}
+                  className={`entity-tab ${ownershipFilter === "all" ? "active" : ""}`}
                   onClick={() => setOwnershipFilter("all")}
                 >
                   전체
@@ -546,8 +540,8 @@ function EndfieldStatisticsPage() {
                   disabled={!currentRoleId}
                   title={
                     currentRoleId
-                      ? `현재 roleId ${currentRoleId} 기준으로 필터링합니다.`
-                      : "확장 프로그램에서 데이터를 감지한 뒤 사용할 수 있습니다."
+                      ? `저장된 roleId ${currentRoleId} 기준으로 필터링합니다.`
+                      : "확장 프로그램에서 통계 보기 또는 내 데이터 보기를 한 번 실행하면 사용할 수 있습니다."
                   }
                 >
                   {viewMode === "characters"
@@ -557,7 +551,7 @@ function EndfieldStatisticsPage() {
               </div>
 
               <input
-                className="search-input"
+                className="search-input statistics-search-input"
                 value={keyword}
                 onChange={(event) => setKeyword(event.target.value)}
                 placeholder={
@@ -568,7 +562,7 @@ function EndfieldStatisticsPage() {
               />
 
               <select
-                className="sort-select"
+                className="search-input statistics-search-input"
                 value={sortMode}
                 onChange={(event) =>
                   setSortMode(event.target.value as SortMode)
@@ -583,6 +577,7 @@ function EndfieldStatisticsPage() {
               <div className="filter-dropdown-wrap">
                 <button
                   className={`filter-toggle-button ${filterOpen ? "active" : ""}`}
+                  type="button"
                   onClick={() => setFilterOpen((prev) => !prev)}
                 >
                   필터
@@ -591,14 +586,20 @@ function EndfieldStatisticsPage() {
                 {filterOpen && (
                   <div className="filter-dropdown">
                     <div className="filter-dropdown-header">
-                      <h3>필터</h3>
+                      <div>
+                        <strong>필터</strong>
+                        <p>조건을 선택해 통계를 좁혀봅니다.</p>
+                      </div>
 
                       <button
                         className="filter-reset-button"
+                        type="button"
                         onClick={() => {
                           resetFilters();
-                          if (viewMode === "weapons") {
-                            setOwnershipFilter("all");
+                          if (viewMode === "characters") {
+                            setViewMode("characters");
+                          } else {
+                            setViewMode("weapons");
                           }
                           setFilterOpen(true);
                         }}

@@ -446,30 +446,64 @@ body {
 /* =========================
    Toolbar / Tabs / Search
 ========================= */
+.statistics-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.toolbar-row-primary {
+  justify-content: flex-start;
+}
+
+.toolbar-row-filters {
+  justify-content: flex-end;
+}
+
+.statistics-search-input {
+  width: 240px;
+  flex: 0 1 240px;
+}
+
+.statistics-sort-select {
+  min-width: 190px;
+  width: 190px;
+  flex: 0 0 190px;
+}
 
 .toolbar {
-  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
   margin-top: 18px;
 }
 
-.toolbar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+.toolbar-left,
 .toolbar-right {
   display: flex;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  flex: 1 1 280px;
+}
+
+.toolbar-right {
+  flex: 1 1 420px;
   justify-content: flex-end;
-  gap: 12px;
-  flex: 1;
-  min-width: 320px;
 }
 
 .entity-tabs {
@@ -507,9 +541,10 @@ body {
 }
 
 .search-input {
-  width: 260px;
+  width: 240px;
   min-width: 220px;
-  max-width: 320px;
+  max-width: 100%;
+  flex: 0 1 240px;
   padding: 10px 14px;
   border-radius: 999px;
   border: 1px solid var(--border-soft);
@@ -530,6 +565,7 @@ body {
 .sort-select {
   height: 42px;
   min-width: 150px;
+  flex: 0 1 150px;
   padding: 0 34px 0 14px;
   border-radius: 999px;
   border: 1px solid var(--border-soft);
@@ -796,8 +832,8 @@ body {
 
 .collection-top-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   left: auto;
   z-index: 6;
 
@@ -1282,6 +1318,7 @@ body {
   .toolbar-left,
   .toolbar-right {
     width: 100%;
+    justify-content: flex-start;
   }
 
   .toolbar-right {
@@ -1290,9 +1327,31 @@ body {
     min-width: 0;
   }
 
+  .toolbar-row-filters {
+    justify-content: flex-start;
+  }
+
+  .statistics-search-input,
+  .statistics-sort-select {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .entity-tabs {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .search-input {
     max-width: none;
     width: 100%;
+  }
+
+  .search-input,
+  .sort-select {
+    width: 100%;
+    flex: 1 1 100%;
   }
 
   .sort-select {
@@ -1305,6 +1364,7 @@ body {
 
   .filter-toggle-button {
     width: 100%;
+    justify-content: center;
   }
 
   .filter-dropdown {
